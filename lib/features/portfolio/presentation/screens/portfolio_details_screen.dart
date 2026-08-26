@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+import 'package:hassanzamin/app/app_router.dart';
 import 'package:hassanzamin/core/constants/app_colors.dart';
 import 'package:hassanzamin/core/widgets/custom_appbar.dart';
 import 'package:hassanzamin/features/footer/presentation/screens/footer_section.dart';
@@ -116,13 +116,7 @@ class _GeneralTrainingDetailsState extends State<GeneralTrainingDetails> {
                               SizedBox(height: isMobile ? 15 : 25),
                               CustomBackToHome(
                                 title: data.category,
-                                onPressed: () {
-                                  if (context.canPop()) {
-                                    context.pop();
-                                  } else {
-                                    context.go('/');
-                                  }
-                                },
+                                onPressed: () => goBackOrHome(context),
                               ),
                               SizedBox(height: 20),
                             ],

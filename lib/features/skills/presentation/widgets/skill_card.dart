@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:hassanzamin/features/skills/model/skill_model.dart';
 
 import '../../../../core/constants/app_colors.dart';
-import '../../model/skill_model.dart';
 
 class SkillCard extends StatefulWidget {
-  final SkillModel skill;
+  final SkillPageData skill;
 
   const SkillCard({super.key, required this.skill});
 

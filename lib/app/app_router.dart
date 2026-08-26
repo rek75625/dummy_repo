@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:hassanzamin/features/about/presentation/screens/about_screen.dart';
@@ -29,4 +30,18 @@ class AppRouter {
       ),
     ],
   );
+}
+
+/////////////////////////////////////
+/// function for router
+////////////////////////////////////
+
+void goBackOrHome(BuildContext context) {
+  final router = GoRouter.of(context);
+
+  if (router.canPop()) {
+    router.pop();
+  } else {
+    router.go('/');
+  }
 }

@@ -15,14 +15,14 @@ class SkillsGrid extends StatelessWidget {
   Widget build(BuildContext context) {
     final provider = context.watch<SkillProvider>();
 
-    int crossAxisCount = 3;
+    int crossAxisCount = 5;
 
     if (Responsive.isTablet(context)) {
-      crossAxisCount = 2;
+      crossAxisCount = 3;
     }
 
     if (Responsive.isMobile(context)) {
-      crossAxisCount = 1;
+      crossAxisCount = 2;
     }
 
     return AnimationLimiter(

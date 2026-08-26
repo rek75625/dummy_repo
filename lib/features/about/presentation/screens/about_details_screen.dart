@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hassanzamin/app/app_router.dart';
 import 'package:hassanzamin/core/widgets/custom_appbar.dart';
 import 'package:hassanzamin/features/about/presentation/screens/about_screen.dart';
 import 'package:hassanzamin/features/about/presentation/screens/video_player_screen.dart';
@@ -91,7 +92,7 @@ class AboutDetailsScreen extends StatelessWidget {
                               SizedBox(height: isMobile ? 15 : 25),
                               CustomBackToHome(
                                 title: "About Us",
-                                onPressed: () {},
+                                onPressed: () => goBackOrHome(context),
                               ),
                               SizedBox(height: 20),
                             ],

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+import 'package:hassanzamin/app/app_router.dart';
 import 'package:hassanzamin/core/widgets/custom_appbar.dart';
 import 'package:hassanzamin/features/contact/widget/contact_section.dart';
 import 'package:hassanzamin/features/footer/presentation/screens/footer_section.dart';
@@ -93,13 +93,7 @@ class ContactDetailsScreen extends StatelessWidget {
                               SizedBox(height: isMobile ? 15 : 25),
                               CustomBackToHome(
                                 title: "Contact Us",
-                                onPressed: () {
-                                  if (context.canPop()) {
-                                    context.pop();
-                                  } else {
-                                    context.go('/');
-                                  }
-                                },
+                                onPressed: () => goBackOrHome(context),
                               ),
                               SizedBox(height: 20),
                             ],
