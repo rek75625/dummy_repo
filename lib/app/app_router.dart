@@ -20,7 +20,7 @@ class AppRouter {
 
       GoRoute(
         path: "/services",
-        builder: (context, state) => const ServiceScreen(),
+        builder: (context, state) => const ServicesScreen(),
       ),
 
       GoRoute(

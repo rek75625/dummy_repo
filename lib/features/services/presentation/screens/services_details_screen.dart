@@ -4,7 +4,8 @@ import 'package:hassanzamin/core/constants/app_colors.dart';
 import 'package:hassanzamin/core/widgets/custom_appbar.dart';
 import 'package:hassanzamin/features/footer/presentation/screens/footer_section.dart';
 import 'package:hassanzamin/features/footer/presentation/screens/newsletter_section.dart';
-import 'package:hassanzamin/features/services/presentation/widgets/detail_screen_card.dart';
+import 'package:hassanzamin/features/services/presentation/widgets/service_card_hover.dart';
+import 'package:hassanzamin/features/services/service_model.dart';
 import 'package:hassanzamin/routes/back_to_home.dart';
 
 class ServicesDetailsScreen extends StatefulWidget {
@@ -120,46 +121,14 @@ class _ServicesDetailsScreenState extends State<ServicesDetailsScreen> {
             ),
             SizedBox(height: 50),
             Container(
-              padding: EdgeInsets.symmetric(horizontal: 60),
-              child: Column(
-                children: [
-                  ServiceHoverCard(
-                    icon: Icons.campaign_rounded,
-                    title: 'Digital Marketing',
-                    description:
-                        'Social Media Management • Personal Branding • Digital Strategy',
-                    statValue: '92%',
-                    statLabel: 'Reach Growth',
-                    secondStatValue: '4.8x',
-                    secondStatLabel: 'ROI',
-                  ),
-
-                  const SizedBox(height: 18),
-
-                  ServiceHoverCard(
-                    icon: Icons.rocket_launch_rounded,
-                    title: 'Data Driven Growth',
-                    description:
-                        'Clean & scalable Network connectivity • Data Analytics • Growth Hacking',
-                    statValue: '78%',
-                    statLabel: 'Growth',
-                    secondStatValue: '3.6x',
-                    secondStatLabel: 'ROI',
-                  ),
-
-                  const SizedBox(height: 18),
-
-                  ServiceHoverCard(
-                    icon: Icons.phone_android_rounded,
-                    title: 'Google Ecosystem Properties',
-                    description:
-                        'Productivity • Services • Advertising • Analytics and more',
-                    statValue: '87%',
-                    statLabel: 'Efficiency',
-                    secondStatValue: '2.9x',
-                    secondStatLabel: 'Conversion',
-                  ),
-                ],
+              padding: EdgeInsets.symmetric(horizontal: 40),
+              child: ListView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: services.length,
+                itemBuilder: (context, index) {
+                  return ServiceHoverCards(service: services[index]);
+                },
               ),
             ),
 

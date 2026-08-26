@@ -100,7 +100,7 @@ class HomeScreen extends StatelessWidget {
 
               PartnersSection(key: provider.partnersKey),
 
-              ServiceScreen(key: provider.servicesKey),
+              ServicesScreen(key: provider.servicesKey),
 
               PortfolioSection(key: provider.portfolioKey),
 

@@ -59,6 +59,19 @@ class ServiceProvider extends ChangeNotifier {
           'Get expert guidance, practical plans and personalized advice '
           'to solve challenges and grow faster with confidence.',
     ),
+    ServiceModel(
+      number: '07',
+      title: 'Social Media Management',
+      description:
+          'Build a strong social presence with engaging content, strategic planning and consistent audience growth.',
+    ),
+
+    ServiceModel(
+      number: '08',
+      title: 'Conversion Optimization',
+      description:
+          'Optimize websites, landing pages and sales funnels to turn more visitors into leads and paying customers.',
+    ),
   ];
 
   void toggleService(int index) {
