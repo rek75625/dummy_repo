@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hassanzamin/features/contact/presentation/contact_details_screen.dart';
 import 'package:hassanzamin/features/home/provider/home_provider.dart';
 
@@ -77,10 +78,7 @@ class ContactUsWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextButton(
       onPressed: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => ContactDetailsScreen()),
-        );
+        context.pushNamed("contact");
       },
       child: Text(
         "Contact Us",

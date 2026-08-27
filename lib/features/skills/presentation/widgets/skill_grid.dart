@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
-import 'package:hassanzamin/features/home/provider/home_provider.dart';
-import 'package:hassanzamin/features/skills/presentation/screen/skills_details_screen.dart';
+import 'package:go_router/go_router.dart';
+
 import 'package:hassanzamin/repositories/responsive.dart';
 import 'package:provider/provider.dart';
 
@@ -45,13 +45,7 @@ class SkillsGrid extends StatelessWidget {
               child: FadeInAnimation(
                 child: GestureDetector(
                   onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (_) => SkillsDetailsScreen(index: index),
-                      ),
-                    );
-                    context.read<HomeProvider>().openSkills(index);
+                    context.pushNamed("skillsDetails", extra: index);
                   },
                   child: SkillCard(skill: provider.skills[index]),
                 ),

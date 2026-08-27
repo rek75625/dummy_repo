@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:hassanzamin/features/services/presentation/screens/services_details_screen.dart';
+import 'package:go_router/go_router.dart';
 
 import 'package:hassanzamin/features/services/service_model.dart';
 
 class ExpandedService extends StatelessWidget {
   final ServiceItem service;
+  final int index;
 
-  const ExpandedService({super.key, required this.service});
+  const ExpandedService({
+    super.key,
+    required this.service,
+    required this.index,
+  });
 
   static const Color navy = Color(0xff242052);
   static const Color yellow = Color(0xffffd238);
@@ -30,10 +35,10 @@ class ExpandedService extends StatelessWidget {
         final bool compact = width < 700;
 
         if (compact) {
-          return _buildCompact(context);
+          return _buildCompact(context, index);
         }
 
-        return _buildDesktop(context);
+        return _buildDesktop(context, index);
       },
     );
   }
@@ -42,26 +47,31 @@ class ExpandedService extends StatelessWidget {
   // DESKTOP / TABLET
   // ============================================================
 
-  Widget _buildDesktop(BuildContext context) {
-    return Row(
-      key: const ValueKey('expanded-desktop'),
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Expanded(
-          flex: 34,
-          child: AspectRatio(
-            aspectRatio: 1.25,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(20),
-              child: Image.asset(service.image, fit: BoxFit.cover),
+  Widget _buildDesktop(BuildContext context, int index) {
+    return GestureDetector(
+      onTap: () {
+        context.pushNamed("servicesDetails", extra: index);
+      },
+      child: Row(
+        key: const ValueKey('expanded-desktop'),
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Expanded(
+            flex: 34,
+            child: AspectRatio(
+              aspectRatio: 1.25,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(20),
+                child: Image.asset(service.image, fit: BoxFit.cover),
+              ),
             ),
           ),
-        ),
 
-        const SizedBox(width: 26),
+          const SizedBox(width: 26),
 
-        Expanded(flex: 66, child: _buildInformation(context)),
-      ],
+          Expanded(flex: 66, child: _buildInformation(context, index)),
+        ],
+      ),
     );
   }
 
@@ -69,27 +79,32 @@ class ExpandedService extends StatelessWidget {
   // MOBILE / SMALL TABLET
   // ============================================================
 
-  Widget _buildCompact(BuildContext context) {
-    return Column(
-      key: const ValueKey('expanded-mobile'),
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        ClipRRect(
-          borderRadius: BorderRadius.circular(18),
-          child: AspectRatio(
-            aspectRatio: 16 / 9,
-            child: Image.asset(
-              service.image,
-              width: double.infinity,
-              fit: BoxFit.cover,
+  Widget _buildCompact(BuildContext context, int index) {
+    return GestureDetector(
+      onTap: () {
+        context.pushNamed("servicesDetails", extra: index);
+      },
+      child: Column(
+        key: const ValueKey('expanded-mobile'),
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(18),
+            child: AspectRatio(
+              aspectRatio: 16 / 9,
+              child: Image.asset(
+                service.image,
+                width: double.infinity,
+                fit: BoxFit.cover,
+              ),
             ),
           ),
-        ),
 
-        const SizedBox(height: 18),
+          const SizedBox(height: 18),
 
-        _buildInformation(context),
-      ],
+          _buildInformation(context, index),
+        ],
+      ),
     );
   }
 
@@ -97,7 +112,7 @@ class ExpandedService extends StatelessWidget {
   // INFORMATION
   // ============================================================
 
-  Widget _buildInformation(BuildContext context) {
+  Widget _buildInformation(BuildContext context, int index) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -118,7 +133,7 @@ class ExpandedService extends StatelessWidget {
 
         const SizedBox(height: 20),
 
-        _buildBottom(context),
+        _buildBottom(context, index),
       ],
     );
   }
@@ -206,7 +221,7 @@ class ExpandedService extends StatelessWidget {
   // BOTTOM
   // ============================================================
 
-  Widget _buildBottom(BuildContext context) {
+  Widget _buildBottom(BuildContext context, int index) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
@@ -218,7 +233,7 @@ class ExpandedService extends StatelessWidget {
 
         const Spacer(),
 
-        _buildExploreButton(context),
+        _buildExploreButton(context, index),
       ],
     );
   }
@@ -227,13 +242,10 @@ class ExpandedService extends StatelessWidget {
   // EXPLORE BUTTON
   // ===========================================================
 
-  Widget _buildExploreButton(BuildContext context) {
+  Widget _buildExploreButton(BuildContext context, int index) {
     return GestureDetector(
       onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => ServicesDetailsScreen()),
-        );
+        context.pushNamed("servicesDetails", extra: index);
       },
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 11),

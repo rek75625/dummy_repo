@@ -61,7 +61,7 @@ class HomeScreen extends StatelessWidget {
         return ServicesDetailsScreen();
 
       case HomePage.portfolio:
-        return GeneralTrainingDetails(
+        return PortfolioDetailsScreen(
           index: provider.selectedPortfolioIndex,
           portfolioModel: Provider.of<PortfolioProvider>(
             context,

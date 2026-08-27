@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:go_router/go_router.dart';
 
 import 'package:hassanzamin/core/widgets/custom_appbar.dart';
 import 'package:hassanzamin/features/partners/models/partner_model.dart';
@@ -563,16 +562,7 @@ class _SafeBackButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CustomBackToHome(
-      title: "Partners",
-      onPressed: () {
-        if (context.canPop()) {
-          context.pop();
-        } else {
-          context.go('/');
-        }
-      },
-    );
+    return CustomBackToHome(title: "Partners");
   }
 }
 

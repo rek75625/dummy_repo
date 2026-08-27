@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hassanzamin/core/animations/fade_animation.dart';
 import 'package:hassanzamin/core/animations/heros_buttons.dart';
-import 'package:hassanzamin/features/home/provider/home_provider.dart';
 import 'package:provider/provider.dart';
 
 import '../../provider/about_provider.dart';
@@ -72,7 +72,7 @@ class AboutContent extends StatelessWidget {
             readmore: "Read More",
             only: only,
             onPressed: () {
-              context.read<HomeProvider>().openAbout();
+              context.pushNamed('about');
             },
           ),
         ),

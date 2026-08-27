@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:hassanzamin/core/animations/hover_animation.dart';
+import 'package:hassanzamin/core/widgets/animated_gradient.dart';
 import 'package:hassanzamin/features/about/provider/about_provider.dart';
 import 'package:hassanzamin/features/footer/provider/footer_provider.dart';
 import 'package:hassanzamin/features/home/provider/floating_action_provider.dart';
@@ -32,6 +34,8 @@ Future<void> main() async {
         ChangeNotifierProvider(create: (_) => SkillProvider()),
         ChangeNotifierProvider(create: (_) => FooterProvider()),
         ChangeNotifierProvider(create: (_) => FloatingActionProvider()),
+        ChangeNotifierProvider(create: (_) => MouseRegionProvider()),
+        ChangeNotifierProvider(create: (_) => ToggleProvider()),
       ],
       child: const PortfolioApp(),
     ),

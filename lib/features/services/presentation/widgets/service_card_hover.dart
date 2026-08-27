@@ -6,8 +6,13 @@ import 'package:hassanzamin/features/services/service_model.dart';
 
 class ServiceHoverCards extends StatefulWidget {
   final ServiceItem service;
+  final int index;
 
-  const ServiceHoverCards({super.key, required this.service});
+  const ServiceHoverCards({
+    super.key,
+    required this.service,
+    required this.index,
+  });
 
   @override
   State<ServiceHoverCards> createState() => _ServiceHoverCardsState();
@@ -88,10 +93,12 @@ class _ServiceHoverCardsState extends State<ServiceHoverCards>
                   ? ExpandedService(
                       key: const ValueKey('expanded-service'),
                       service: widget.service,
+                      index: widget.index,
                     )
                   : CollapsedService(
                       key: const ValueKey('collapsed-service'),
                       service: widget.service,
+                      index: widget.index,
                     ),
             ),
           ),

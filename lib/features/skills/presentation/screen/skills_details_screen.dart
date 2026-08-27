@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:hassanzamin/app/app_router.dart';
 import 'package:hassanzamin/core/widgets/custom_appbar.dart';
 import 'package:hassanzamin/features/footer/presentation/screens/footer_section.dart';
 import 'package:hassanzamin/features/footer/presentation/screens/newsletter_section.dart';
@@ -803,10 +802,7 @@ class SkillsDetailsScreen extends StatelessWidget {
                                       ),
                                     ),
                                     SizedBox(height: isMobile ? 15 : 25),
-                                    CustomBackToHome(
-                                      title: skill.title,
-                                      onPressed: () => goBackOrHome(context),
-                                    ),
+                                    CustomBackToHome(title: skill.title),
                                     SizedBox(height: 20),
                                   ],
                                 ),

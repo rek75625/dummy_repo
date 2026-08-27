@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:hassanzamin/core/animations/hover_animation.dart';
+import 'package:provider/provider.dart';
 
 class HoverScaleAnimation extends StatefulWidget {
   final Widget child;
@@ -14,11 +16,12 @@ class _HoverScaleAnimationState extends State<HoverScaleAnimation> {
 
   @override
   Widget build(BuildContext context) {
+    final isHovered = context.watch<MouseRegionProvider>().hover;
     return MouseRegion(
-      onEnter: (_) => setState(() => hover = true),
-      onExit: (_) => setState(() => hover = false),
+      onEnter: (_) => context.watch<MouseRegionProvider>().setHover(true),
+      onExit: (_) => context.watch<MouseRegionProvider>().setHover(false),
       child: AnimatedScale(
-        scale: hover ? 1.04 : 1,
+        scale: isHovered ? 1.04 : 1,
         duration: const Duration(milliseconds: 250),
         child: widget.child,
       ),

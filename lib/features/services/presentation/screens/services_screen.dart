@@ -23,7 +23,7 @@ class ServicesScreen extends StatelessWidget {
             physics: const NeverScrollableScrollPhysics(),
             itemCount: services.length,
             itemBuilder: (context, index) {
-              return ServiceHoverCards(service: services[index]);
+              return ServiceHoverCards(service: services[index], index: index);
             },
           ),
         ),

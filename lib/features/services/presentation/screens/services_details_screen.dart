@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:hassanzamin/app/app_router.dart';
 import 'package:hassanzamin/core/widgets/custom_appbar.dart';
 import 'package:hassanzamin/features/footer/presentation/screens/footer_section.dart';
 import 'package:hassanzamin/features/footer/presentation/screens/newsletter_section.dart';
@@ -146,8 +145,9 @@ class _ServicesDetailsScreenState extends State<ServicesDetailsScreen> {
                       ),
                       SizedBox(height: isMobile ? 15 : 25),
                       CustomBackToHome(
-                        title: "Sevices",
-                        onPressed: () => goBackOrHome(context),
+                        title: ServiceDetailData
+                            .services[widget.initialIndex]
+                            .title,
                       ),
                       SizedBox(height: 20),
                     ],

@@ -3,8 +3,13 @@ import 'package:hassanzamin/features/services/service_model.dart';
 
 class CollapsedService extends StatelessWidget {
   final ServiceItem service;
+  final int index;
 
-  const CollapsedService({super.key, required this.service});
+  const CollapsedService({
+    super.key,
+    required this.service,
+    required this.index,
+  });
 
   @override
   Widget build(BuildContext context) {

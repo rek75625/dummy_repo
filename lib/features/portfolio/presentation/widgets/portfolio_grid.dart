@@ -40,7 +40,7 @@ class PortfolioGrid extends StatelessWidget {
 
             Navigator.of(context).push(
               MaterialPageRoute(
-                builder: (_) => GeneralTrainingDetails(
+                builder: (_) => PortfolioDetailsScreen(
                   index: index,
                   portfolioModel: portfolio,
                 ),

@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:hassanzamin/app/app_router.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hassanzamin/core/constants/app_colors.dart';
 import 'package:hassanzamin/core/widgets/custom_appbar.dart';
 import 'package:hassanzamin/features/footer/presentation/screens/footer_section.dart';
@@ -9,21 +9,21 @@ import 'package:hassanzamin/routes/back_to_home.dart';
 
 import '../../model/portfolio_model.dart';
 
-class GeneralTrainingDetails extends StatefulWidget {
+class PortfolioDetailsScreen extends StatefulWidget {
   final PortfolioModel portfolioModel;
   final int index;
 
-  const GeneralTrainingDetails({
+  const PortfolioDetailsScreen({
     super.key,
     required this.portfolioModel,
     required this.index,
   });
 
   @override
-  State<GeneralTrainingDetails> createState() => _GeneralTrainingDetailsState();
+  State<PortfolioDetailsScreen> createState() => _PortfolioDetailsScreenState();
 }
 
-class _GeneralTrainingDetailsState extends State<GeneralTrainingDetails> {
+class _PortfolioDetailsScreenState extends State<PortfolioDetailsScreen> {
   bool _imageHovered = false;
 
   PortfolioModel get data => widget.portfolioModel;
@@ -115,8 +115,7 @@ class _GeneralTrainingDetailsState extends State<GeneralTrainingDetails> {
                               ),
                               SizedBox(height: isMobile ? 15 : 25),
                               CustomBackToHome(
-                                title: data.category,
-                                onPressed: () => goBackOrHome(context),
+                                title: widget.portfolioModel.category,
                               ),
                               SizedBox(height: 20),
                             ],
@@ -390,7 +389,9 @@ class _GeneralTrainingDetailsState extends State<GeneralTrainingDetails> {
     return MouseRegion(
       cursor: SystemMouseCursors.click,
       child: GestureDetector(
-        onTap: () {},
+        onTap: () {
+          context.pushNamed("portfolioDetails");
+        },
 
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 15),

@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hassanzamin/core/animations/fade_animation.dart';
 import 'package:hassanzamin/core/animations/heros_buttons.dart';
-import 'package:hassanzamin/features/home/provider/home_provider.dart';
 import 'package:hassanzamin/features/partners/presentation/widgets/auto-scroll_logo.dart';
-import 'package:provider/provider.dart';
 
 import '../../../../core/constants/app_colors.dart';
 
@@ -56,7 +55,7 @@ class PartnersSection extends StatelessWidget {
                 readmore: "Read More",
                 only: true,
                 onPressed: () {
-                  context.read<HomeProvider>().openPartners();
+                  context.pushNamed("partners");
                 },
               ),
             ),
