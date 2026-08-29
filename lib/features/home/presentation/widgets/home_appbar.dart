@@ -210,9 +210,7 @@ Drawer mobileDrawer(BuildContext context, HomeProvider provider) {
 
                   Navigator.push(
                     context,
-                    MaterialPageRoute(
-                      builder: (_) => const ContactDetailsScreen(),
-                    ),
+                    MaterialPageRoute(builder: (_) => ContactDetailScreen()),
                   );
                 },
                 child: const Padding(

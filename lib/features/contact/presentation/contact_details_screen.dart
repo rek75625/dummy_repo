@@ -5,8 +5,8 @@ import 'package:hassanzamin/features/footer/presentation/screens/footer_section.
 import 'package:hassanzamin/features/footer/presentation/screens/newsletter_section.dart';
 import 'package:hassanzamin/routes/back_to_home.dart';
 
-class ContactDetailsScreen extends StatelessWidget {
-  const ContactDetailsScreen({super.key});
+class ContactDetailScreen extends StatelessWidget {
+  const ContactDetailScreen({super.key});
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;

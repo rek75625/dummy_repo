@@ -8,8 +8,8 @@ import 'package:hassanzamin/features/footer/presentation/screens/footer_section.
 import 'package:hassanzamin/features/footer/presentation/screens/newsletter_section.dart';
 import 'package:hassanzamin/routes/back_to_home.dart';
 
-class AboutDetailsScreen extends StatelessWidget {
-  const AboutDetailsScreen({super.key});
+class AboutDetailScreen extends StatelessWidget {
+  const AboutDetailScreen({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -111,7 +111,7 @@ class AboutDetailsScreen extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (_) => VideoPlayerScreen(
+                    builder: (_) => AboutVideoPlayerScreen(
                       videoId: "xuF6TlAQCO0",
                       title: "Hassan Zamin The Digital Marketing Expert",
                     ),

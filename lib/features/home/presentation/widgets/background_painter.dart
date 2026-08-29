@@ -3,8 +3,8 @@ import 'package:hassanzamin/core/painter/hero_background_painter.dart';
 
 import '../../../../core/constants/app_colors.dart';
 
-class BackgroundPainter extends StatelessWidget {
-  const BackgroundPainter({super.key});
+class HomeBackgroundPainter extends StatelessWidget {
+  const HomeBackgroundPainter({super.key});
 
   @override
   Widget build(BuildContext context) {

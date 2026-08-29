@@ -43,13 +43,13 @@ class ReviewsSection extends StatelessWidget {
             ),
           ),
 
-          const SizedBox(height: 30),
+          SizedBox(height: 30),
 
-          const ReviewSlider(),
+          ReviewsSlider(),
 
-          const SizedBox(height: 30),
+          SizedBox(height: 30),
 
-          const ReviewIndicator(),
+          ReviewsIndicator(),
         ],
       ),
     );

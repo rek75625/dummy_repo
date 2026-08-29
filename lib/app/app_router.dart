@@ -43,7 +43,7 @@ final GoRouter appRouter = GoRouter(
       path: '/about',
       name: 'about',
       builder: (context, state) {
-        return const AboutDetailsScreen();
+        return AboutDetailScreen();
       },
     ),
 
@@ -54,7 +54,7 @@ final GoRouter appRouter = GoRouter(
       path: '/contact',
       name: 'contact',
       builder: (context, state) {
-        return ContactDetailsScreen();
+        return ContactDetailScreen();
       },
     ),
 
@@ -129,7 +129,7 @@ final GoRouter appRouter = GoRouter(
             message: 'No service index was provided.',
           );
         }
-        return ServicesDetailsScreen(initialIndex: extra);
+        return ServicesDetailScreen(initialIndex: extra);
       },
     ),
 
@@ -159,7 +159,7 @@ final GoRouter appRouter = GoRouter(
 // ============================================================
 
 class PortfolioDetailsArguments {
-  final PortfolioModel portfolioModel;
+  final PortfoliosModel portfolioModel;
 
   final int index;
 

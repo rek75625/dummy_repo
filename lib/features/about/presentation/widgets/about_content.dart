@@ -8,9 +8,9 @@ import 'package:provider/provider.dart';
 import '../../provider/about_provider.dart';
 import 'about_feature_item.dart';
 
-class AboutContent extends StatelessWidget {
+class AboutContents extends StatelessWidget {
   final bool only;
-  const AboutContent({super.key, required this.only});
+  const AboutContents({super.key, required this.only});
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +60,7 @@ class AboutContent extends StatelessWidget {
 
         /// Features
         ...provider.features.asMap().entries.map(
-          (entry) => AboutFeatureItem(title: entry.value)
+          (entry) => AboutFeaturesItem(title: entry.value)
               .animate()
               .fadeIn(delay: (600 + entry.key * 150).ms, duration: 500.ms)
               .slideX(begin: .2, end: 0),

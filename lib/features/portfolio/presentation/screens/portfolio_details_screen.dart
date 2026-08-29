@@ -1,16 +1,17 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hassanzamin/core/constants/app_colors.dart';
 import 'package:hassanzamin/core/widgets/custom_appbar.dart';
 import 'package:hassanzamin/features/footer/presentation/screens/footer_section.dart';
 import 'package:hassanzamin/features/footer/presentation/screens/newsletter_section.dart';
+import 'package:hassanzamin/features/partners/provider/partner_provider.dart';
 import 'package:hassanzamin/routes/back_to_home.dart';
+import 'package:provider/provider.dart';
 
 import '../../model/portfolio_model.dart';
 
-class PortfolioDetailsScreen extends StatefulWidget {
-  final PortfolioModel portfolioModel;
+class PortfolioDetailsScreen extends StatelessWidget {
+  final PortfoliosModel portfolioModel;
   final int index;
 
   const PortfolioDetailsScreen({
@@ -19,73 +20,77 @@ class PortfolioDetailsScreen extends StatefulWidget {
     required this.index,
   });
 
-  @override
-  State<PortfolioDetailsScreen> createState() => _PortfolioDetailsScreenState();
-}
-
-class _PortfolioDetailsScreenState extends State<PortfolioDetailsScreen> {
-  bool _imageHovered = false;
-
-  PortfolioModel get data => widget.portfolioModel;
+  PortfoliosModel get data => portfolioModel;
 
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.sizeOf(context).width;
+
+    final isHovered = context.watch<MouseRegionForPartnerProvider>().hovered;
 
     final bool isMobile = width < 700;
     final bool isTablet = width >= 700 && width < 1150;
 
     return Scaffold(
       backgroundColor: AppColors.background,
-
       body: SingleChildScrollView(
         child: Column(
           children: [
             customAppBar(context),
+
+            // ============================================================
+            // HERO SECTION
+            // ============================================================
             LayoutBuilder(
               builder: (context, constraints) {
                 final width = constraints.maxWidth;
+
                 final bool isMobile = width < 768;
                 final bool isTablet = width >= 768 && width < 1200;
                 final bool isDesktop = width >= 1200;
+
                 final double heroHeight = isDesktop
                     ? 400
                     : isTablet
                     ? 350
                     : 250;
+
                 final double glassWidth = isDesktop
                     ? width * .65
                     : isTablet
                     ? width * .70
                     : width * .70;
+
                 final double glassPadding = isDesktop
                     ? 30
                     : isTablet
                     ? 16
                     : 10;
+
                 final double titleSize = isDesktop
                     ? 50
                     : isTablet
                     ? 35
                     : 26;
+
                 return Container(
                   margin: EdgeInsets.symmetric(horizontal: isMobile ? 15 : 30),
                   height: heroHeight,
                   child: Stack(
                     alignment: Alignment.center,
                     children: [
-                      /// Background Image
+                      // Background Image
                       Positioned.fill(
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(12),
                           child: Image.asset(
-                            "assets/images/aboutus.png",
+                            'assets/images/aboutus.png',
                             fit: BoxFit.cover,
                           ),
                         ),
                       ),
 
-                      /// Glass Card
+                      // Glass Card
                       Center(
                         child: Container(
                           width: glassWidth,
@@ -103,7 +108,6 @@ class _PortfolioDetailsScreenState extends State<PortfolioDetailsScreen> {
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              /// Title
                               Text(
                                 data.title,
                                 textAlign: TextAlign.center,
@@ -113,11 +117,12 @@ class _PortfolioDetailsScreenState extends State<PortfolioDetailsScreen> {
                                   fontSize: titleSize,
                                 ),
                               ),
+
                               SizedBox(height: isMobile ? 15 : 25),
-                              CustomBackToHome(
-                                title: widget.portfolioModel.category,
-                              ),
-                              SizedBox(height: 20),
+
+                              CustomBackToHome(title: portfolioModel.category),
+
+                              const SizedBox(height: 20),
                             ],
                           ),
                         ),
@@ -127,10 +132,14 @@ class _PortfolioDetailsScreenState extends State<PortfolioDetailsScreen> {
                 );
               },
             ),
-            SizedBox(height: 50),
+
+            const SizedBox(height: 50),
+
+            // ============================================================
+            // CONTENT SECTION
+            // ============================================================
             Container(
               width: double.infinity,
-
               padding: EdgeInsets.symmetric(
                 horizontal: isMobile
                     ? 24
@@ -143,12 +152,17 @@ class _PortfolioDetailsScreenState extends State<PortfolioDetailsScreen> {
                     ? 65
                     : 85,
               ),
-
               child: isMobile
-                  ? _buildMobile(context)
-                  : _buildDesktop(context, isTablet: isTablet),
+                  ? _buildMobile(context, isHovered)
+                  : _buildDesktop(
+                      context,
+                      isTablet: isTablet,
+                      isHovered: isHovered,
+                    ),
             ),
-            SizedBox(height: 50),
+
+            const SizedBox(height: 50),
+
             NewsletterSection(),
             FooterSection(),
           ],
@@ -158,10 +172,14 @@ class _PortfolioDetailsScreenState extends State<PortfolioDetailsScreen> {
   }
 
   // ============================================================
-  // DESKTOP / TABLET
+  // DESKTOP
   // ============================================================
 
-  Widget _buildDesktop(BuildContext context, {required bool isTablet}) {
+  Widget _buildDesktop(
+    BuildContext context, {
+    required bool isTablet,
+    required bool isHovered,
+  }) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
@@ -173,7 +191,10 @@ class _PortfolioDetailsScreenState extends State<PortfolioDetailsScreen> {
           ),
         ),
 
-        Expanded(flex: 53, child: _buildImage(context, isTablet: isTablet)),
+        Expanded(
+          flex: 53,
+          child: _buildImage(context, isTablet: isTablet, isHovered: isHovered),
+        ),
       ],
     );
   }
@@ -182,11 +203,11 @@ class _PortfolioDetailsScreenState extends State<PortfolioDetailsScreen> {
   // MOBILE
   // ============================================================
 
-  Widget _buildMobile(BuildContext context) {
+  Widget _buildMobile(BuildContext context, bool isHovered) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        _buildImage(context, isTablet: false),
+        _buildImage(context, isTablet: false, isHovered: isHovered),
 
         const SizedBox(height: 40),
 
@@ -296,7 +317,7 @@ class _PortfolioDetailsScreenState extends State<PortfolioDetailsScreen> {
 
         const SizedBox(height: 32),
 
-        _buildCTA(),
+        _buildCTA(context),
 
         const SizedBox(height: 38),
 
@@ -385,22 +406,21 @@ class _PortfolioDetailsScreenState extends State<PortfolioDetailsScreen> {
   // CTA
   // ============================================================
 
-  Widget _buildCTA() {
+  Widget _buildCTA(BuildContext context) {
     return MouseRegion(
       cursor: SystemMouseCursors.click,
       child: GestureDetector(
         onTap: () {
-          context.pushNamed("portfolioDetails");
+          // Do NOT push "portfolioDetails" here because
+          // this screen is already the portfolioDetails route.
+          context.pop();
         },
-
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 15),
-
           decoration: BoxDecoration(
             color: Colors.black,
             borderRadius: BorderRadius.circular(2),
           ),
-
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -435,13 +455,10 @@ class _PortfolioDetailsScreenState extends State<PortfolioDetailsScreen> {
   Widget _buildFooter() {
     return Container(
       width: double.infinity,
-
       padding: const EdgeInsets.only(top: 20),
-
       decoration: const BoxDecoration(
         border: Border(top: BorderSide(color: Colors.white, width: 1)),
       ),
-
       child: Text(
         data.footerText,
         style: const TextStyle(
@@ -458,7 +475,11 @@ class _PortfolioDetailsScreenState extends State<PortfolioDetailsScreen> {
   // IMAGE
   // ============================================================
 
-  Widget _buildImage(BuildContext context, {required bool isTablet}) {
+  Widget _buildImage(
+    BuildContext context, {
+    required bool isTablet,
+    required bool isHovered,
+  }) {
     final width = MediaQuery.sizeOf(context).width;
 
     final double imageHeight = width < 700
@@ -471,35 +492,22 @@ class _PortfolioDetailsScreenState extends State<PortfolioDetailsScreen> {
       cursor: SystemMouseCursors.click,
 
       onEnter: (_) {
-        if (!kIsWeb) return;
-
-        setState(() {
-          _imageHovered = true;
-        });
+        context.read<MouseRegionForPartnerProvider>().setHover(true);
       },
 
       onExit: (_) {
-        if (!kIsWeb) return;
-
-        setState(() {
-          _imageHovered = false;
-        });
+        context.read<MouseRegionForPartnerProvider>().setHover(false);
       },
 
       child: AnimatedScale(
-        scale: _imageHovered ? 1.012 : 1.0,
-
+        scale: isHovered ? 1.012 : 1.0,
         duration: const Duration(milliseconds: 400),
-
         curve: Curves.easeOutCubic,
-
         child: Container(
           width: double.infinity,
           height: imageHeight,
-
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(28),
-
             boxShadow: [
               BoxShadow(
                 color: Colors.white.withValues(alpha: .12),
@@ -508,23 +516,16 @@ class _PortfolioDetailsScreenState extends State<PortfolioDetailsScreen> {
               ),
             ],
           ),
-
           clipBehavior: Clip.antiAlias,
-
           child: Image.asset(
             data.image,
-
             width: double.infinity,
             height: double.infinity,
-
             fit: BoxFit.cover,
-
             filterQuality: FilterQuality.high,
-
             errorBuilder: (context, error, stackTrace) {
               return const ColoredBox(
                 color: Color(0xffeeeeee),
-
                 child: Center(
                   child: Icon(
                     Icons.image_not_supported_outlined,

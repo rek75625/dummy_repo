@@ -4,12 +4,12 @@ import 'package:provider/provider.dart';
 import '../../provider/review_provider.dart';
 import 'review_card.dart';
 
-class ReviewSlider extends StatelessWidget {
-  const ReviewSlider({super.key});
+class ReviewsSlider extends StatelessWidget {
+  const ReviewsSlider({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final provider = context.watch<ReviewProvider>();
+    final provider = context.watch<ReviewsProvider>();
 
     final width = MediaQuery.of(context).size.width;
 
@@ -31,7 +31,7 @@ class ReviewSlider extends StatelessWidget {
         itemCount: provider.reviews.length,
 
         itemBuilder: (_, index) {
-          return ReviewCard(review: provider.reviews[index]);
+          return ReviewsCard(review: provider.reviews[index]);
         },
       ),
     );

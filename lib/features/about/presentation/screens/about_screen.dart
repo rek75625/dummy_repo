@@ -23,17 +23,17 @@ class AboutScreen extends StatelessWidget {
           ? Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Expanded(child: AboutImages()),
+                Expanded(child: AboutsImages()),
                 SizedBox(width: 20),
-                Expanded(child: AboutContent(only: isDetails)),
+                Expanded(child: AboutContents(only: isDetails)),
               ],
             )
           : Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                AboutImages(),
+                AboutsImages(),
                 SizedBox(height: 50),
-                AboutContent(only: isDetails),
+                AboutContents(only: isDetails),
               ],
             ),
     );

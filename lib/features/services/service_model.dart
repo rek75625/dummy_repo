@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class ServiceItem {
+class ServicesItem {
   final String title;
   final String shortDescription;
   final String description;
@@ -12,7 +12,7 @@ class ServiceItem {
   final String metricTwo;
   final String metricTwoLabel;
 
-  const ServiceItem({
+  const ServicesItem({
     required this.title,
     required this.shortDescription,
     required this.description,
@@ -26,8 +26,8 @@ class ServiceItem {
   });
 }
 
-final List<ServiceItem> services = [
-  ServiceItem(
+final List<ServicesItem> services = [
+  ServicesItem(
     title: 'Performance Marketing',
     shortDescription:
         'Meta Ads, Google Ads and data-driven campaigns that maximize ROI and business growth.',
@@ -47,7 +47,7 @@ final List<ServiceItem> services = [
     metricTwoLabel: 'ROAS',
   ),
 
-  ServiceItem(
+  ServicesItem(
     title: 'Brand Growth Strategy',
     shortDescription:
         'Building memorable brands with positioning, messaging and digital identity.',
@@ -67,7 +67,7 @@ final List<ServiceItem> services = [
     metricTwoLabel: 'IMPACT',
   ),
 
-  ServiceItem(
+  ServicesItem(
     title: 'Lead Generation',
     shortDescription:
         'Generate qualified leads through funnels, landing pages and automation.',
@@ -87,7 +87,7 @@ final List<ServiceItem> services = [
     metricTwoLabel: 'CONVERSION',
   ),
 
-  ServiceItem(
+  ServicesItem(
     title: 'Digital Education',
     shortDescription:
         'Empowering individuals and businesses with digital marketing knowledge.',
@@ -106,7 +106,7 @@ final List<ServiceItem> services = [
     metricTwo: '15+',
     metricTwoLabel: 'YEARS',
   ),
-  ServiceItem(
+  ServicesItem(
     title: 'Client Acquisition Strategy',
     shortDescription:
         'Build predictable client acquisition systems that turn prospects into valuable customers.',
@@ -126,7 +126,7 @@ final List<ServiceItem> services = [
     metricTwoLabel: 'ACQUISITION',
   ),
 
-  ServiceItem(
+  ServicesItem(
     title: 'Mentorship & Business Consulting',
     shortDescription:
         'Strategic guidance for businesses, professionals and teams focused on sustainable growth.',
@@ -146,7 +146,7 @@ final List<ServiceItem> services = [
     metricTwoLabel: 'PROJECTS',
   ),
 
-  ServiceItem(
+  ServicesItem(
     title: 'Social Media Management',
     shortDescription:
         'Build engaging social media presence through strategic content, campaigns and community growth.',
@@ -166,7 +166,7 @@ final List<ServiceItem> services = [
     metricTwoLabel: 'REACH',
   ),
 
-  ServiceItem(
+  ServicesItem(
     title: 'Conversion Optimization',
     shortDescription:
         'Turn more visitors and leads into customers through data-driven conversion optimization.',
@@ -186,3 +186,16 @@ final List<ServiceItem> services = [
     metricTwoLabel: 'ROI',
   ),
 ];
+
+class SelectServicesProvider with ChangeNotifier {
+  int _selectedIndex = 0;
+
+  int get selectedIndex => _selectedIndex;
+
+  void selectService(int index) {
+    if (_selectedIndex == index) return;
+
+    _selectedIndex = index;
+    notifyListeners();
+  }
+}

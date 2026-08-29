@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hassanzamin/features/services/service_model.dart';
 
 class CollapsedService extends StatelessWidget {
-  final ServiceItem service;
+  final ServicesItem service;
   final int index;
 
   const CollapsedService({

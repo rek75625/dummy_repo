@@ -74,7 +74,7 @@ class TeamGrid extends StatelessWidget {
         childAspectRatio: .73,
       ),
       itemBuilder: (_, index) {
-        return TeamCard(member: members[index]);
+        return TeamCards(member: members[index]);
       },
     );
   }

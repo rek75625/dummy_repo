@@ -1,8 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:hassanzamin/core/animations/hover_animation.dart';
 import 'package:hassanzamin/core/constants/app_colors.dart';
+import 'package:provider/provider.dart';
 
-class FeatureCard extends StatefulWidget {
+class FeatureCard extends StatelessWidget {
   final IconData icon;
   final String title;
   final String subtitle;
@@ -15,15 +17,9 @@ class FeatureCard extends StatefulWidget {
   });
 
   @override
-  State<FeatureCard> createState() => _FeatureCardState();
-}
-
-class _FeatureCardState extends State<FeatureCard> {
-  bool hover = false;
-
-  @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
+    final isHovered = context.watch<MouseRegionProvider>().hover;
 
     final bool mobile = width < 768;
     final bool tablet = width >= 768 && width < 1200;
@@ -31,8 +27,12 @@ class _FeatureCardState extends State<FeatureCard> {
     final bool enableHover = kIsWeb || width >= 1200;
 
     return MouseRegion(
-      onEnter: enableHover ? (_) => setState(() => hover = true) : null,
-      onExit: enableHover ? (_) => setState(() => hover = false) : null,
+      onEnter: enableHover
+          ? (_) => context.read<MouseRegionProvider>().setHover(true)
+          : null,
+      onExit: enableHover
+          ? (_) => context.read<MouseRegionProvider>().setHover(false)
+          : null,
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 300),
         curve: Curves.easeOut,
@@ -45,23 +45,23 @@ class _FeatureCardState extends State<FeatureCard> {
               : 26,
         ),
 
-        transform: Matrix4.translationValues(0, hover ? -8 : 0, 0),
+        transform: Matrix4.translationValues(0, isHovered ? -8 : 0, 0),
 
         decoration: BoxDecoration(
-          color: hover ? Colors.grey.shade200 : AppColors.background,
+          color: isHovered ? Colors.grey.shade200 : AppColors.background,
           borderRadius: BorderRadius.circular(24),
 
           border: Border.all(
-            color: hover ? const Color(0xffFFD83D) : Colors.grey.shade200,
+            color: isHovered ? const Color(0xffFFD83D) : Colors.grey.shade200,
             width: 1.5,
           ),
 
           boxShadow: [
             BoxShadow(
-              color: hover
+              color: isHovered
                   ? const Color(0xffFFD83D).withValues(alpha: .20)
                   : Colors.black.withValues(alpha: .05),
-              blurRadius: hover ? 35 : 15,
+              blurRadius: isHovered ? 35 : 15,
               offset: const Offset(0, 12),
             ),
           ],
@@ -79,7 +79,7 @@ class _FeatureCardState extends State<FeatureCard> {
               height: mobile ? 55 : 70,
 
               decoration: BoxDecoration(
-                color: hover
+                color: isHovered
                     ? const Color(0xff26224F)
                     : const Color(0xffFFD83D),
 
@@ -87,8 +87,8 @@ class _FeatureCardState extends State<FeatureCard> {
               ),
 
               child: Icon(
-                widget.icon,
-                color: hover
+                icon,
+                color: isHovered
                     ? const Color(0xffFFD83D)
                     : const Color(0xff26224F),
                 size: mobile ? 28 : 34,
@@ -109,12 +109,14 @@ class _FeatureCardState extends State<FeatureCard> {
                     style: TextStyle(
                       fontSize: mobile ? 18 : 22,
                       fontWeight: FontWeight.bold,
-                      color: hover ? const Color(0xff26224F) : Colors.black87,
+                      color: isHovered
+                          ? const Color(0xff26224F)
+                          : Colors.black87,
                     ),
                     child: Text(
-                      widget.title,
+                      title,
                       style: TextStyle(
-                        color: hover ? AppColors.background : Colors.white,
+                        color: isHovered ? AppColors.background : Colors.white,
                       ),
                     ),
                   ),
@@ -122,9 +124,9 @@ class _FeatureCardState extends State<FeatureCard> {
                   SizedBox(height: 8),
 
                   Text(
-                    widget.subtitle,
+                    subtitle,
                     style: TextStyle(
-                      color: hover ? AppColors.background : Colors.grey,
+                      color: isHovered ? AppColors.background : Colors.grey,
                       height: 1.6,
                       fontSize: mobile ? 14 : 15,
                     ),
@@ -144,12 +146,12 @@ class _FeatureCardState extends State<FeatureCard> {
 
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: hover ? const Color(0xffFFD83D) : Colors.transparent,
+                color: isHovered ? const Color(0xffFFD83D) : Colors.transparent,
               ),
 
               child: Icon(
                 Icons.arrow_forward_rounded,
-                color: hover ? const Color(0xff26224F) : Colors.grey,
+                color: isHovered ? const Color(0xff26224F) : Colors.grey,
               ),
             ),
           ],

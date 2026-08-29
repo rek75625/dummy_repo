@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../model/portfolio_model.dart';
 
 class PortfolioCard extends StatefulWidget {
-  final PortfolioModel portfolio;
+  final PortfoliosModel portfolio;
   final int index;
   final VoidCallback? onTap;
 
@@ -21,7 +21,7 @@ class PortfolioCard extends StatefulWidget {
 class _PortfolioCardState extends State<PortfolioCard> {
   bool _hovered = false;
 
-  PortfolioModel get portfolio => widget.portfolio;
+  PortfoliosModel get portfolio => widget.portfolio;
 
   @override
   Widget build(BuildContext context) {

@@ -11,7 +11,7 @@ class PartnersDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<CompanyModel> companies = CompanyData.companies;
+    final List<CompanysModel> companies = CompanyData.companies;
 
     return Scaffold(
       backgroundColor: const Color(0xFF211E4B),
@@ -108,9 +108,9 @@ class PartnersDetailsScreen extends StatelessWidget {
                       BuildContext context,
                       int index,
                     ) {
-                      final CompanyModel company = companies[index];
+                      final CompanysModel company = companies[index];
 
-                      return CompanyCard(company: company);
+                      return CompanysCard(company: company);
                     }, childCount: companies.length),
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: columns,

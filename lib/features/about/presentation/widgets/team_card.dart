@@ -4,41 +4,41 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:hassanzamin/core/animations/hover_animation.dart';
 import 'package:hassanzamin/features/about/presentation/models/team_member_model.dart';
 import 'package:hassanzamin/features/footer/presentation/widgets/social_icon_button.dart';
+import 'package:provider/provider.dart';
 
-class TeamCard extends StatefulWidget {
+class TeamCards extends StatelessWidget {
   final TeamMember member;
 
-  const TeamCard({super.key, required this.member});
-
-  @override
-  State<TeamCard> createState() => _TeamCardState();
-}
-
-class _TeamCardState extends State<TeamCard> {
-  bool hover = false;
+  const TeamCards({super.key, required this.member});
 
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
+    final isHovered = context.watch<MouseRegionProvider>().hover;
 
     final bool mobile = width < 768;
 
     return MouseRegion(
-      onEnter: kIsWeb ? (_) => setState(() => hover = true) : null,
-      onExit: kIsWeb ? (_) => setState(() => hover = false) : null,
+      onEnter: kIsWeb
+          ? (_) => context.read<MouseRegionProvider>().setHover(true)
+          : null,
+      onExit: kIsWeb
+          ? (_) => context.read<MouseRegionProvider>().setHover(false)
+          : null,
 
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 350),
 
-        transform: Matrix4.translationValues(0, hover ? -10 : 0, 0),
+        transform: Matrix4.translationValues(0, isHovered ? -10 : 0, 0),
 
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(28),
 
           gradient: LinearGradient(
-            colors: hover
+            colors: isHovered
                 ? [const Color(0xff37306B), const Color(0xff2B2555)]
                 : [const Color(0xff2D275C), const Color(0xff211B47)],
           ),
@@ -47,8 +47,8 @@ class _TeamCardState extends State<TeamCard> {
 
           boxShadow: [
             BoxShadow(
-              blurRadius: hover ? 35 : 18,
-              spreadRadius: hover ? 2 : 0,
+              blurRadius: isHovered ? 35 : 18,
+              spreadRadius: isHovered ? 2 : 0,
               color: const Color(0xffFFD54F).withValues(alpha: .20),
               offset: const Offset(0, 18),
             ),
@@ -68,7 +68,7 @@ class _TeamCardState extends State<TeamCard> {
                 children: [
                   AnimatedScale(
                     duration: const Duration(milliseconds: 300),
-                    scale: hover ? 1.08 : 1,
+                    scale: isHovered ? 1.08 : 1,
 
                     child: Container(
                       width: mobile ? 95 : 120,
@@ -83,7 +83,7 @@ class _TeamCardState extends State<TeamCard> {
                         ),
 
                         image: DecorationImage(
-                          image: AssetImage(widget.member.image),
+                          image: AssetImage(member.image),
                           fit: BoxFit.cover,
                         ),
                       ),
@@ -93,7 +93,7 @@ class _TeamCardState extends State<TeamCard> {
                   const SizedBox(height: 20),
 
                   Text(
-                    widget.member.name,
+                    member.name,
 
                     textAlign: TextAlign.center,
 
@@ -107,7 +107,7 @@ class _TeamCardState extends State<TeamCard> {
                   SizedBox(height: 8),
 
                   Text(
-                    widget.member.designation,
+                    member.designation,
 
                     textAlign: TextAlign.center,
 

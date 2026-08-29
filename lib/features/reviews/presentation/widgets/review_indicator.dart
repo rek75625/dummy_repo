@@ -4,12 +4,12 @@ import 'package:provider/provider.dart';
 import '../../provider/review_provider.dart';
 import '../../../../core/constants/app_colors.dart';
 
-class ReviewIndicator extends StatelessWidget {
-  const ReviewIndicator({super.key});
+class ReviewsIndicator extends StatelessWidget {
+  const ReviewsIndicator({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final provider = context.watch<ReviewProvider>();
+    final provider = context.watch<ReviewsProvider>();
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,

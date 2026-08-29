@@ -6,8 +6,8 @@ import '../../../../core/constants/app_colors.dart';
 import '../../../../core/widgets/primary_button.dart';
 import '../../../../core/widgets/secondary_button.dart';
 
-class HeroLeftContent extends StatelessWidget {
-  const HeroLeftContent({super.key});
+class HerosLeftContent extends StatelessWidget {
+  const HerosLeftContent({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -12,11 +12,11 @@ class PortfolioProvider extends ChangeNotifier {
     'Training',
   ];
 
-  final List<PortfolioModel> items = const [
+  final List<PortfoliosModel> items = const [
     // ============================================================
     // 01 - L'ORÉAL
     // ============================================================
-    PortfolioModel(
+    PortfoliosModel(
       title: "L'Oréal Retail Design Training",
       image: 'assets/images/aboutme.jpeg',
       category: 'Corporate',
@@ -43,7 +43,7 @@ class PortfolioProvider extends ChangeNotifier {
     // ============================================================
     // 02 - SHAN FOODS
     // ============================================================
-    PortfolioModel(
+    PortfoliosModel(
       title: "Shan Foods Merchandising Training",
       image: 'assets/images/aboutme.jpeg',
       category: 'Corporate',
@@ -69,7 +69,7 @@ class PortfolioProvider extends ChangeNotifier {
     // ============================================================
     // 03 - FLORA
     // ============================================================
-    PortfolioModel(
+    PortfoliosModel(
       title: "Flora Launch Training",
       image: 'assets/images/aboutme.jpeg',
       category: 'Corporate',
@@ -95,7 +95,7 @@ class PortfolioProvider extends ChangeNotifier {
     // ============================================================
     // 04 - HILAL FOODS
     // ============================================================
-    PortfolioModel(
+    PortfoliosModel(
       title: "Hilal Foods Retail Merchandising Training",
       image: 'assets/images/aboutme.jpeg',
       category: 'Corporate',
@@ -122,7 +122,7 @@ class PortfolioProvider extends ChangeNotifier {
     // ============================================================
     // 05 - MODERN TRADE
     // ============================================================
-    PortfolioModel(
+    PortfoliosModel(
       title: "Modern Trade Training",
       image: 'assets/images/aboutme.jpeg',
       category: 'Corporate',
@@ -147,7 +147,7 @@ class PortfolioProvider extends ChangeNotifier {
     // ============================================================
     // 06 - RETAIL DESIGN
     // ============================================================
-    PortfolioModel(
+    PortfoliosModel(
       title: "Retail Design Mastery",
       image: 'assets/images/aboutme.jpeg',
       category: 'Corporate',
@@ -173,7 +173,7 @@ class PortfolioProvider extends ChangeNotifier {
     // ============================================================
     // 07 - APP TRACKING
     // ============================================================
-    PortfolioModel(
+    PortfoliosModel(
       title: "App Tracking Training",
       image: 'assets/images/aboutme.jpeg',
       category: 'Corporate',
@@ -199,7 +199,7 @@ class PortfolioProvider extends ChangeNotifier {
     // ============================================================
     // 08 - RETAIL DESIGN
     // ============================================================
-    PortfolioModel(
+    PortfoliosModel(
       title: "Retail Design Mastery",
       image: 'assets/images/aboutme.jpeg',
       category: 'Corporate',
@@ -224,7 +224,7 @@ class PortfolioProvider extends ChangeNotifier {
     // ============================================================
     // 09 - Skill21 Training
     // ============================================================
-    PortfolioModel(
+    PortfoliosModel(
       title: "Skills21 - Digital Learning",
       image: 'assets/images/aboutme.jpeg',
       category: 'Training',
@@ -263,7 +263,7 @@ class PortfolioProvider extends ChangeNotifier {
     // ============================================================
     // 10 - MightAims Training
     // ============================================================
-    PortfolioModel(
+    PortfoliosModel(
       title: "Mighty Aims Professional Training Center",
       image: 'assets/images/aboutme.jpeg',
       category: 'Training',
@@ -310,7 +310,7 @@ class PortfolioProvider extends ChangeNotifier {
     // ============================================================
     // 11 - Inspire Education System Training
     // ============================================================
-    PortfolioModel(
+    PortfoliosModel(
       title: "Inspire Education & Skills Development",
 
       image: 'assets/images/aboutme.jpeg',
@@ -354,7 +354,7 @@ class PortfolioProvider extends ChangeNotifier {
     ),
   ];
 
-  void changeCategory(int index) {
+  void changesCategory(int index) {
     if (index < 0 || index >= categories.length) {
       return;
     }
@@ -363,7 +363,7 @@ class PortfolioProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  List<PortfolioModel> get filteredItems {
+  List<PortfoliosModel> get filteredItems {
     if (selectedCategory == 0) {
       return items;
     }
@@ -375,7 +375,7 @@ class PortfolioProvider extends ChangeNotifier {
         .toList(growable: false);
   }
 
-  PortfolioModel getItem(int index) {
+  PortfoliosModel getItem(int index) {
     return items[index];
   }
 }

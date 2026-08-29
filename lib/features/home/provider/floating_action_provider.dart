@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class FloatingActionProvider extends ChangeNotifier {
+class FloatingActionsProvider extends ChangeNotifier {
   late ScrollController scrollController;
 
   void initialize(ScrollController controller) {
     scrollController = controller;
   }
 
-  Future<void> scrollToTop() async {
+  Future<void> scrollingToTop() async {
     if (!scrollController.hasClients) return;
 
     await scrollController.animateTo(

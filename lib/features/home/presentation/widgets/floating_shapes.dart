@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class FloatingShapes extends StatelessWidget {
-  const FloatingShapes({super.key});
+class FloatingShape extends StatelessWidget {
+  const FloatingShape({super.key});
 
   @override
   Widget build(BuildContext context) {

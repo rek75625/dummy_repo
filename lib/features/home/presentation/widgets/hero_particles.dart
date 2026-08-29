@@ -1,8 +1,8 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 
-class HeroParticles extends StatelessWidget {
-  const HeroParticles({super.key});
+class HerosParticles extends StatelessWidget {
+  const HerosParticles({super.key});
 
   @override
   Widget build(BuildContext context) {

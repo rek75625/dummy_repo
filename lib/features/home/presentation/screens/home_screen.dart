@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hassanzamin/features/contact/presentation/contact_details_screen.dart';
 import 'package:hassanzamin/features/partners/presentation/screens/partner_details_screen.dart';
+import 'package:hassanzamin/features/partners/presentation/screens/partners_screen.dart';
 import 'package:hassanzamin/features/portfolio/provider/portfolio_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -18,7 +19,6 @@ import 'package:hassanzamin/features/portfolio/presentation/screens/portfolio_sc
 import 'package:hassanzamin/features/portfolio/presentation/screens/portfolio_details_screen.dart';
 
 import 'package:hassanzamin/features/partners/presentation/screens/moving_banner.dart';
-import 'package:hassanzamin/features/partners/presentation/screens/partners_screen.dart';
 
 import 'package:hassanzamin/features/reviews/presentation/screens/review_screen.dart';
 import 'package:hassanzamin/features/reviews/presentation/screens/review_details_screen.dart';
@@ -44,7 +44,7 @@ class HomeScreen extends StatelessWidget {
       floatingActionButton:
           provider.currentPage == HomePage.home && provider.showFab
           ? FloatingActionButton(
-              onPressed: provider.scrollToTop,
+              onPressed: provider.scrollingToTop,
               backgroundColor: Colors.amber.shade600,
               child: Icon(Icons.arrow_circle_up, color: Colors.black),
             )
@@ -55,10 +55,10 @@ class HomeScreen extends StatelessWidget {
   Widget _buildBody(BuildContext context, HomeProvider provider) {
     switch (provider.currentPage) {
       case HomePage.about:
-        return AboutDetailsScreen();
+        return AboutDetailScreen();
 
       case HomePage.services:
-        return ServicesDetailsScreen();
+        return ServicesDetailScreen();
 
       case HomePage.portfolio:
         return PortfolioDetailsScreen(
@@ -79,7 +79,7 @@ class HomeScreen extends StatelessWidget {
         return SkillsDetailsScreen(index: provider.selectedPortfolioIndex);
 
       case HomePage.contact:
-        return ContactDetailsScreen();
+        return ContactDetailScreen();
 
       case HomePage.home:
         return SingleChildScrollView(
@@ -88,13 +88,13 @@ class HomeScreen extends StatelessWidget {
             children: [
               appBar(context, provider),
 
-              HeroSection(key: provider.homeKey),
+              HeroSections(key: provider.homeKey),
 
               AboutScreen(key: provider.aboutKey, isDetails: true),
 
               SizedBox(height: 80),
 
-              MotionBanner(),
+              MotionBanners(),
 
               SizedBox(height: 40),
 

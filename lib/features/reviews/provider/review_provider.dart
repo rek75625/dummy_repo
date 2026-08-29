@@ -3,14 +3,14 @@ import 'dart:async' show Timer;
 import 'package:flutter/material.dart';
 import '../model/review_model.dart';
 
-class ReviewProvider extends ChangeNotifier {
+class ReviewsProvider extends ChangeNotifier {
   final PageController pageController = PageController(viewportFraction: 0.92);
 
   int currentPage = 0;
   Timer? _autoSlider;
 
-  final List<ReviewModel> reviews = const [
-    ReviewModel(
+  final List<ReviewsModel> reviews = const [
+    ReviewsModel(
       image: "assets/images/aboutme.jpeg",
       name: "Ali Hassan",
       company: "Hilal Foods",
@@ -19,7 +19,7 @@ class ReviewProvider extends ChangeNotifier {
       rating: 5,
     ),
 
-    ReviewModel(
+    ReviewsModel(
       image: "assets/images/aboutme.jpeg",
       name: "Sarah Ahmed",
       company: "L'Oréal",
@@ -28,7 +28,7 @@ class ReviewProvider extends ChangeNotifier {
       rating: 5,
     ),
 
-    ReviewModel(
+    ReviewsModel(
       image: "assets/images/aboutme.jpeg",
       name: "Usman Khan",
       company: "Blue Band",
@@ -36,7 +36,7 @@ class ReviewProvider extends ChangeNotifier {
           "Excellent mentor and consultant. We achieved exceptional business growth.",
       rating: 5,
     ),
-    ReviewModel(
+    ReviewsModel(
       image: "assets/images/aboutme.jpeg",
       name: "Ayesha Malik",
       company: "Nestlé Pakistan",
@@ -45,7 +45,7 @@ class ReviewProvider extends ChangeNotifier {
       rating: 5,
     ),
 
-    ReviewModel(
+    ReviewsModel(
       image: "assets/images/aboutme.jpeg",
       name: "Ahmed Raza",
       company: "Engro Corporation",
@@ -54,7 +54,7 @@ class ReviewProvider extends ChangeNotifier {
       rating: 5,
     ),
 
-    ReviewModel(
+    ReviewsModel(
       image: "assets/images/aboutme.jpeg",
       name: "Fatima Noor",
       company: "Systems Limited",
@@ -71,7 +71,7 @@ class ReviewProvider extends ChangeNotifier {
     super.dispose();
   }
 
-  ReviewProvider() {
+  ReviewsProvider() {
     pageController.addListener(() {
       currentPage = pageController.page?.round() ?? 0;
       notifyListeners();

@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:hassanzamin/core/widgets/primary_button.dart';
 import 'package:hassanzamin/core/widgets/secondary_button.dart';
 
-class HeroButtons extends StatelessWidget {
-  const HeroButtons({super.key});
+class HerosButtons extends StatelessWidget {
+  const HerosButtons({super.key});
 
   @override
   Widget build(BuildContext context) {

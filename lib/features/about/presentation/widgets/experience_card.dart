@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/constants/app_colors.dart';
 
-class ExperienceCard extends StatelessWidget {
-  const ExperienceCard({super.key});
+class ExperienceCardnTag extends StatelessWidget {
+  const ExperienceCardnTag({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -3,8 +3,8 @@ import 'package:hassanzamin/repositories/responsive.dart';
 
 import 'experience_card.dart';
 
-class AboutImages extends StatelessWidget {
-  const AboutImages({super.key});
+class AboutsImages extends StatelessWidget {
+  const AboutsImages({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -82,7 +82,7 @@ class AboutImages extends StatelessWidget {
             Positioned(
               left: desktop ? 80 : 20,
               bottom: -20,
-              child: const ExperienceCard(),
+              child: ExperienceCardnTag(),
             ),
           ],
         ),

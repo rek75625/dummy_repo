@@ -4,8 +4,8 @@ import 'package:hassanzamin/core/widgets/animated_card.dart';
 import '../../../../core/animations/floating_animation.dart';
 import '../../../../core/widgets/glass_card.dart';
 
-class HeroRightImage extends StatelessWidget {
-  const HeroRightImage({super.key});
+class HerosRightImage extends StatelessWidget {
+  const HerosRightImage({super.key});
 
   @override
   Widget build(BuildContext context) {

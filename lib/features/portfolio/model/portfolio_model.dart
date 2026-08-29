@@ -1,4 +1,4 @@
-class PortfolioModel {
+class PortfoliosModel {
   final String title;
   final String image;
   final String category;
@@ -25,7 +25,7 @@ class PortfolioModel {
   // Navigation
   final List<String> navigation;
 
-  const PortfolioModel({
+  const PortfoliosModel({
     required this.title,
     required this.image,
     required this.category,

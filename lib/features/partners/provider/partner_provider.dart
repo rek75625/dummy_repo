@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 
 class PartnerProvider extends ChangeNotifier {
   final List<String> logos = [
@@ -15,4 +15,19 @@ class PartnerProvider extends ChangeNotifier {
     "assets/companies/vida.jpg",
     "assets/companies/pharma.png",
   ];
+}
+
+class MouseRegionForPartnerProvider extends ChangeNotifier {
+  bool _hovered = false;
+
+  bool get hovered => _hovered;
+
+  void setHover(bool value) {
+    if (!kIsWeb) return;
+
+    if (_hovered == value) return;
+
+    _hovered = value;
+    notifyListeners();
+  }
 }

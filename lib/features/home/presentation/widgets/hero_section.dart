@@ -11,8 +11,8 @@ import 'background_painter.dart';
 import 'floating_shapes.dart';
 import 'hero_buttons.dart';
 
-class HeroSection extends StatelessWidget {
-  const HeroSection({super.key});
+class HeroSections extends StatelessWidget {
+  const HeroSections({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -21,13 +21,13 @@ class HeroSection extends StatelessWidget {
       child: Stack(
         children: [
           /// Background
-          BackgroundPainter(),
+          HomeBackgroundPainter(),
 
           /// Animated particles
-          HeroParticles(),
+          HerosParticles(),
 
           /// Floating decorative shapes
-          FloatingShapes(),
+          FloatingShape(),
 
           /// Responsive Hero Content
           SafeArea(
@@ -51,7 +51,7 @@ class HeroSection extends StatelessWidget {
           ),
 
           /// Scroll Indicator
-          const ScrollIndicator(),
+          ScrollingIndicator(),
         ],
       ),
     );
@@ -164,10 +164,10 @@ class HeroSection extends StatelessWidget {
           ),
         ),
 
-        const SizedBox(height: 30),
+        SizedBox(height: 30),
 
         FadeSlideAnimation(
-          delay: const Duration(milliseconds: 300),
+          delay: Duration(milliseconds: 300),
           child: SizedBox(
             width: 600,
             child: TypingText(
@@ -181,11 +181,11 @@ class HeroSection extends StatelessWidget {
           ),
         ),
 
-        const SizedBox(height: 40),
+        SizedBox(height: 40),
 
-        const FadeSlideAnimation(
+        FadeSlideAnimation(
           delay: Duration(milliseconds: 600),
-          child: HeroButtons(),
+          child: HerosButtons(),
         ),
       ],
     );

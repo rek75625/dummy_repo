@@ -13,7 +13,7 @@ class ServicesScreen extends StatelessWidget {
       children: [
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 40),
-          child: _heading(context),
+          child: _headings(context),
         ),
         SizedBox(height: 20),
         Container(
@@ -23,7 +23,7 @@ class ServicesScreen extends StatelessWidget {
             physics: const NeverScrollableScrollPhysics(),
             itemCount: services.length,
             itemBuilder: (context, index) {
-              return ServiceHoverCards(service: services[index], index: index);
+              return ServicesHoverCards(service: services[index], index: index);
             },
           ),
         ),
@@ -35,7 +35,7 @@ class ServicesScreen extends StatelessWidget {
   // MOBILE / TABLET / DESKTOP / LARGE WEBSITE
   // ============================================================
 
-  Widget _heading(BuildContext context) {
+  Widget _headings(BuildContext context) {
     final width = MediaQuery.sizeOf(context).width;
 
     final bool isMobile = width < 700;

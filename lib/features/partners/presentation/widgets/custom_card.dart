@@ -1,32 +1,17 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-
 import 'package:hassanzamin/features/partners/models/partner_model.dart';
+import 'package:hassanzamin/features/partners/provider/partner_provider.dart';
+import 'package:provider/provider.dart';
 
-class CompanyCard extends StatefulWidget {
-  final CompanyModel company;
+class CompanysCard extends StatelessWidget {
+  final CompanysModel company;
 
-  const CompanyCard({super.key, required this.company});
-
-  @override
-  State<CompanyCard> createState() => _CompanyCardState();
-}
-
-class _CompanyCardState extends State<CompanyCard> {
-  bool _hovered = false;
-
-  void _setHover(bool value) {
-    if (!kIsWeb) return;
-
-    if (_hovered == value) return;
-
-    setState(() {
-      _hovered = value;
-    });
-  }
+  const CompanysCard({super.key, required this.company});
 
   @override
   Widget build(BuildContext context) {
+    final isHovered = context.watch<MouseRegionForPartnerProvider>().hovered;
+
     return LayoutBuilder(
       builder: (context, constraints) {
         final cardWidth = constraints.maxWidth;
@@ -38,61 +23,80 @@ class _CompanyCardState extends State<CompanyCard> {
 
         return MouseRegion(
           cursor: SystemMouseCursors.click,
-          onEnter: (_) => _setHover(true),
-          onExit: (_) => _setHover(false),
+
+          // IMPORTANT:
+          // read() inside event callbacks
+          onEnter: (_) =>
+              context.read<MouseRegionForPartnerProvider>().setHover(true),
+
+          onExit: (_) =>
+              context.read<MouseRegionForPartnerProvider>().setHover(false),
+
           child: GestureDetector(
             onTap: () => _showCompanyDetails(context),
+
             child: AnimatedScale(
-              scale: _hovered ? 1.025 : 1.0,
+              scale: isHovered ? 1.025 : 1.0,
               duration: const Duration(milliseconds: 220),
               curve: Curves.easeOutCubic,
+
               child: AnimatedContainer(
                 duration: const Duration(milliseconds: 220),
                 curve: Curves.easeOutCubic,
+
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(radius),
+
                   gradient: LinearGradient(
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
-                    colors: _hovered
+                    colors: isHovered
                         ? const [Color(0xff34306B), Color(0xff211E4B)]
                         : const [Color(0xff292553), Color(0xff1D1A40)],
                   ),
+
                   border: Border.all(
-                    color: _hovered
+                    color: isHovered
                         ? const Color(0xffffc107).withValues(alpha: .55)
                         : Colors.white.withValues(alpha: .08),
-                    width: _hovered ? 1.3 : 1,
+                    width: isHovered ? 1.3 : 1,
                   ),
+
                   boxShadow: [
                     BoxShadow(
-                      color: _hovered
+                      color: isHovered
                           ? const Color(0xffffc107).withValues(alpha: .14)
                           : Colors.black.withValues(alpha: .20),
-                      blurRadius: _hovered ? 28 : 18,
+                      blurRadius: isHovered ? 28 : 18,
                       offset: const Offset(0, 12),
                     ),
                   ],
                 ),
+
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(radius),
+
                   child: Stack(
                     children: [
-                      // ------------------------------------------
-                      // Decorative circles
-                      // ------------------------------------------
+                      // =================================================
+                      // DECORATIVE CIRCLES
+                      // =================================================
+
                       Positioned(
                         top: -45,
                         right: -45,
+
                         child: AnimatedContainer(
                           duration: const Duration(milliseconds: 300),
-                          width: _hovered ? 145 : 125,
-                          height: _hovered ? 145 : 125,
+
+                          width: isHovered ? 145 : 125,
+                          height: isHovered ? 145 : 125,
+
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
                             color: const Color(
                               0xffffc107,
-                            ).withValues(alpha: _hovered ? .10 : .045),
+                            ).withValues(alpha: isHovered ? .10 : .045),
                           ),
                         ),
                       ),
@@ -100,9 +104,11 @@ class _CompanyCardState extends State<CompanyCard> {
                       Positioned(
                         left: -55,
                         bottom: -55,
+
                         child: Container(
                           width: 140,
                           height: 140,
+
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
                             color: const Color(
@@ -112,9 +118,9 @@ class _CompanyCardState extends State<CompanyCard> {
                         ),
                       ),
 
-                      // ------------------------------------------
-                      // Main content
-                      // ------------------------------------------
+                      // =================================================
+                      // MAIN CONTENT
+                      // =================================================
                       Padding(
                         padding: EdgeInsets.all(
                           mobile
@@ -123,19 +129,22 @@ class _CompanyCardState extends State<CompanyCard> {
                               ? 18
                               : 22,
                         ),
+
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
+
                           children: [
                             // Logo
-                            _logo(),
+                            _logo(isHovered),
 
                             SizedBox(height: mobile ? 14 : 18),
 
                             // Company name
                             Text(
-                              widget.company.name,
+                              company.name,
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
+
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: mobile
@@ -157,9 +166,10 @@ class _CompanyCardState extends State<CompanyCard> {
                             // Description
                             Flexible(
                               child: Text(
-                                widget.company.description,
+                                company.description,
                                 maxLines: mobile ? 3 : 4,
                                 overflow: TextOverflow.ellipsis,
+
                                 style: TextStyle(
                                   color: Colors.white.withValues(alpha: .65),
                                   fontSize: mobile ? 12.5 : 13.5,
@@ -171,7 +181,7 @@ class _CompanyCardState extends State<CompanyCard> {
                             const SizedBox(height: 14),
 
                             // Button
-                            _viewButton(),
+                            _viewButton(context, isHovered),
                           ],
                         ),
                       ),
@@ -190,31 +200,38 @@ class _CompanyCardState extends State<CompanyCard> {
   // LOGO
   // ============================================================
 
-  Widget _logo() {
+  Widget _logo(bool isHovered) {
     return AnimatedContainer(
       duration: const Duration(milliseconds: 250),
+
       width: 76,
       height: 76,
+
       padding: const EdgeInsets.all(10),
+
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(18),
+
         border: Border.all(
-          color: _hovered
+          color: isHovered
               ? const Color(0xffffc107).withValues(alpha: .55)
               : Colors.white.withValues(alpha: .08),
         ),
+
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: _hovered ? .25 : .12),
-            blurRadius: _hovered ? 18 : 10,
+            color: Colors.black.withValues(alpha: isHovered ? .25 : .12),
+            blurRadius: isHovered ? 18 : 10,
             offset: const Offset(0, 7),
           ),
         ],
       ),
+
       child: Image.asset(
-        widget.company.logo,
+        company.logo,
         fit: BoxFit.contain,
+
         errorBuilder: (_, _, _) {
           return const Icon(
             Icons.business_rounded,
@@ -233,17 +250,22 @@ class _CompanyCardState extends State<CompanyCard> {
   Widget _category() {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 5),
+
       decoration: BoxDecoration(
         color: const Color(0xffffc107).withValues(alpha: .10),
+
         borderRadius: BorderRadius.circular(30),
+
         border: Border.all(
           color: const Color(0xffffc107).withValues(alpha: .22),
         ),
       ),
+
       child: Text(
-        widget.company.category,
+        company.category,
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
+
         style: const TextStyle(
           color: Color(0xffffc107),
           fontSize: 10.5,
@@ -257,47 +279,62 @@ class _CompanyCardState extends State<CompanyCard> {
   // VIEW BUTTON
   // ============================================================
 
-  Widget _viewButton() {
+  Widget _viewButton(BuildContext context, bool isHovered) {
     return SizedBox(
       width: double.infinity,
       height: 42,
+
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 220),
+
         decoration: BoxDecoration(
-          color: _hovered
+          color: isHovered
               ? const Color(0xffffc107)
               : Colors.white.withValues(alpha: .055),
+
           borderRadius: BorderRadius.circular(13),
+
           border: Border.all(
-            color: _hovered
+            color: isHovered
                 ? const Color(0xffffc107)
                 : Colors.white.withValues(alpha: .10),
           ),
         ),
+
         child: Material(
           color: Colors.transparent,
+
           child: InkWell(
             borderRadius: BorderRadius.circular(13),
+
             onTap: () => _showCompanyDetails(context),
+
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
+
               children: [
                 Text(
-                  "View Company",
+                  'View Company',
+
                   style: TextStyle(
-                    color: _hovered ? const Color(0xff211E4B) : Colors.white,
+                    color: isHovered ? const Color(0xff211E4B) : Colors.white,
                     fontSize: 12.5,
                     fontWeight: FontWeight.w700,
                   ),
                 ),
+
                 const SizedBox(width: 8),
+
                 AnimatedSlide(
                   duration: const Duration(milliseconds: 200),
-                  offset: _hovered ? const Offset(.15, 0) : Offset.zero,
+
+                  offset: isHovered ? const Offset(.15, 0) : Offset.zero,
+
                   child: Icon(
                     Icons.arrow_forward_rounded,
                     size: 17,
-                    color: _hovered
+
+                    color: isHovered
                         ? const Color(0xff211E4B)
                         : const Color(0xffffc107),
                   ),
@@ -317,7 +354,9 @@ class _CompanyCardState extends State<CompanyCard> {
   void _showCompanyDetails(BuildContext context) {
     showDialog(
       context: context,
+
       barrierColor: Colors.black.withValues(alpha: .78),
+
       builder: (dialogContext) {
         final width = MediaQuery.sizeOf(dialogContext).width;
 
@@ -325,22 +364,30 @@ class _CompanyCardState extends State<CompanyCard> {
 
         return Dialog(
           backgroundColor: Colors.transparent,
+
           insetPadding: EdgeInsets.symmetric(
             horizontal: mobile ? 16 : 30,
             vertical: 24,
           ),
+
           child: ConstrainedBox(
             constraints: const BoxConstraints(maxWidth: 600),
+
             child: Container(
               padding: EdgeInsets.all(mobile ? 20 : 28),
+
               decoration: BoxDecoration(
                 gradient: const LinearGradient(
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
+
                   colors: [Color(0xff302B63), Color(0xff211E4B)],
                 ),
+
                 borderRadius: BorderRadius.circular(mobile ? 22 : 28),
+
                 border: Border.all(color: Colors.white.withValues(alpha: .10)),
+
                 boxShadow: [
                   BoxShadow(
                     color: Colors.black.withValues(alpha: .45),
@@ -349,24 +396,30 @@ class _CompanyCardState extends State<CompanyCard> {
                   ),
                 ],
               ),
+
               child: SingleChildScrollView(
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
+
                   children: [
                     Row(
                       children: [
                         Container(
                           width: mobile ? 62 : 76,
                           height: mobile ? 62 : 76,
+
                           padding: const EdgeInsets.all(9),
+
                           decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(17),
                           ),
+
                           child: Image.asset(
-                            widget.company.logo,
+                            company.logo,
                             fit: BoxFit.contain,
+
                             errorBuilder: (_, _, _) {
                               return const Icon(
                                 Icons.business,
@@ -381,20 +434,25 @@ class _CompanyCardState extends State<CompanyCard> {
                         Expanded(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
+
                             children: [
                               Text(
-                                widget.company.name,
+                                company.name,
                                 maxLines: 2,
                                 overflow: TextOverflow.ellipsis,
+
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontSize: mobile ? 19 : 23,
                                   fontWeight: FontWeight.w700,
                                 ),
                               ),
+
                               const SizedBox(height: 6),
+
                               Text(
-                                widget.company.category,
+                                company.category,
+
                                 style: const TextStyle(
                                   color: Color(0xffffc107),
                                   fontSize: 12,
@@ -406,10 +464,12 @@ class _CompanyCardState extends State<CompanyCard> {
                         ),
 
                         IconButton(
-                          tooltip: "Close",
+                          tooltip: 'Close',
+
                           onPressed: () {
                             Navigator.of(dialogContext).pop();
                           },
+
                           icon: const Icon(
                             Icons.close_rounded,
                             color: Colors.white70,
@@ -421,7 +481,8 @@ class _CompanyCardState extends State<CompanyCard> {
                     const SizedBox(height: 24),
 
                     Text(
-                      widget.company.description,
+                      company.description,
+
                       style: TextStyle(
                         color: Colors.white.withValues(alpha: .72),
                         fontSize: mobile ? 14 : 15,
@@ -434,16 +495,21 @@ class _CompanyCardState extends State<CompanyCard> {
                     SizedBox(
                       width: double.infinity,
                       height: 50,
+
                       child: ElevatedButton.icon(
                         onPressed: () {
                           // Add url_launcher here.
                         },
+
                         icon: const Icon(Icons.language_rounded, size: 19),
-                        label: const Text("Visit Official Website"),
+
+                        label: const Text('Visit Official Website'),
+
                         style: ElevatedButton.styleFrom(
                           backgroundColor: const Color(0xffffc107),
                           foregroundColor: const Color(0xff211E4B),
                           elevation: 0,
+
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(14),
                           ),

@@ -3,43 +3,33 @@ import 'package:flutter/material.dart';
 import 'package:hassanzamin/features/services/presentation/widgets/collapsed_service.dart';
 import 'package:hassanzamin/features/services/presentation/widgets/expanded_service.dart';
 import 'package:hassanzamin/features/services/service_model.dart';
+import 'package:provider/provider.dart';
 
-class ServiceHoverCards extends StatefulWidget {
-  final ServiceItem service;
+class ServicesHoverCards extends StatelessWidget {
+  final ServicesItem service;
   final int index;
 
-  const ServiceHoverCards({
+  const ServicesHoverCards({
     super.key,
     required this.service,
     required this.index,
   });
 
   @override
-  State<ServiceHoverCards> createState() => _ServiceHoverCardsState();
-}
-
-class _ServiceHoverCardsState extends State<ServiceHoverCards>
-    with SingleTickerProviderStateMixin {
-  bool isHovered = false;
-
-  void _setHover(bool value) {
-    if (!mounted) return;
-
-    setState(() {
-      isHovered = value;
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
+    final isHover = context.watch<ServiceCardHoverProvider>().isHovered;
     return MouseRegion(
       cursor: SystemMouseCursors.click,
 
-      onEnter: (_) => _setHover(true),
-      onExit: (_) => _setHover(false),
+      onEnter: (_) => context.read<ServiceCardHoverProvider>().setHover(true),
+      onExit: (_) => context.read<ServiceCardHoverProvider>().setHover(false),
 
       child: GestureDetector(
-        onTap: () => _setHover(!isHovered),
+        onTap: () {
+          final provider = context.read<ServiceCardHoverProvider>();
+
+          provider.setHover(!provider.isHovered);
+        },
 
         child: AnimatedSize(
           duration: const Duration(milliseconds: 450),
@@ -50,21 +40,21 @@ class _ServiceHoverCardsState extends State<ServiceHoverCards>
             width: double.infinity,
             margin: const EdgeInsets.symmetric(horizontal: 30, vertical: 9),
 
-            padding: EdgeInsets.all(isHovered ? 20 : 26),
+            padding: EdgeInsets.all(isHover ? 20 : 26),
 
             decoration: BoxDecoration(
-              color: isHovered
+              color: isHover
                   ? const Color(0xffF7F7F8)
                   : const Color(0xff242052),
 
               borderRadius: BorderRadius.circular(26),
 
               border: Border.all(
-                color: isHovered ? const Color(0xffffcc33) : Colors.white70,
+                color: isHover ? const Color(0xffffcc33) : Colors.white70,
                 width: 1.3,
               ),
 
-              boxShadow: isHovered
+              boxShadow: isHover
                   ? [
                       BoxShadow(
                         color: Colors.black.withValues(alpha: .20),
@@ -89,21 +79,35 @@ class _ServiceHoverCardsState extends State<ServiceHoverCards>
                 return FadeTransition(opacity: animation, child: child);
               },
 
-              child: isHovered
+              child: isHover
                   ? ExpandedService(
                       key: const ValueKey('expanded-service'),
-                      service: widget.service,
-                      index: widget.index,
+                      service: service,
+                      index: index,
                     )
                   : CollapsedService(
                       key: const ValueKey('collapsed-service'),
-                      service: widget.service,
-                      index: widget.index,
+                      service: service,
+                      index: index,
                     ),
             ),
           ),
         ),
       ),
     );
+  }
+}
+
+class ServiceCardHoverProvider with ChangeNotifier {
+  bool _isHovered = false;
+
+  bool get isHovered => _isHovered;
+
+  void setHover(bool value) {
+    if (_isHovered == value) {
+      return;
+    }
+    _isHovered = value;
+    notifyListeners();
   }
 }

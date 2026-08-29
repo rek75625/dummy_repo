@@ -1,7 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:hassanzamin/core/animations/hover_animation.dart';
+import 'package:provider/provider.dart';
 
-class VideoCard extends StatefulWidget {
+class VideoCard extends StatelessWidget {
   final String thumbnail;
   final String title;
   final String duration;
@@ -16,15 +18,9 @@ class VideoCard extends StatefulWidget {
   });
 
   @override
-  State<VideoCard> createState() => _VideoCardState();
-}
-
-class _VideoCardState extends State<VideoCard> {
-  bool hovering = false;
-
-  @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
+    final isHovered = context.watch<MouseRegionProvider>().hover;
 
     final bool mobile = width < 768;
     final bool tablet = width >= 768 && width < 1200;
@@ -47,13 +43,17 @@ class _VideoCardState extends State<VideoCard> {
     final double radius = mobile ? 18 : 22;
 
     return MouseRegion(
-      onEnter: enableHover ? (_) => setState(() => hovering = true) : null,
-      onExit: enableHover ? (_) => setState(() => hovering = false) : null,
+      onEnter: enableHover
+          ? (_) => context.read<MouseRegionProvider>().setHover(true)
+          : null,
+      onExit: enableHover
+          ? (_) => context.read<MouseRegionProvider>().setHover(false)
+          : null,
       child: AnimatedScale(
         duration: const Duration(milliseconds: 250),
-        scale: hovering ? 1.02 : 1,
+        scale: isHovered ? 1.02 : 1,
         child: GestureDetector(
-          onTap: widget.onTap,
+          onTap: onTap,
           child: AspectRatio(
             aspectRatio: 16 / 9,
             child: Container(
@@ -63,7 +63,7 @@ class _VideoCardState extends State<VideoCard> {
                 borderRadius: BorderRadius.circular(radius),
                 boxShadow: [
                   BoxShadow(
-                    blurRadius: hovering ? 30 : 15,
+                    blurRadius: isHovered ? 30 : 15,
                     color: Colors.black26,
                     offset: const Offset(0, 12),
                   ),
@@ -74,8 +74,8 @@ class _VideoCardState extends State<VideoCard> {
                   Positioned.fill(
                     child: AnimatedScale(
                       duration: const Duration(milliseconds: 300),
-                      scale: hovering ? 1.05 : 1,
-                      child: Image.asset(widget.thumbnail, fit: BoxFit.cover),
+                      scale: isHovered ? 1.05 : 1,
+                      child: Image.asset(thumbnail, fit: BoxFit.cover),
                     ),
                   ),
 
@@ -90,8 +90,8 @@ class _VideoCardState extends State<VideoCard> {
                   Center(
                     child: AnimatedContainer(
                       duration: const Duration(milliseconds: 250),
-                      width: hovering ? playSize + 10 : playSize,
-                      height: hovering ? playSize + 10 : playSize,
+                      width: isHovered ? playSize + 10 : playSize,
+                      height: isHovered ? playSize + 10 : playSize,
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         color: Colors.white.withValues(alpha: .20),
@@ -122,7 +122,7 @@ class _VideoCardState extends State<VideoCard> {
                         children: [
                           Expanded(
                             child: Text(
-                              widget.title,
+                              title,
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
@@ -147,7 +147,7 @@ class _VideoCardState extends State<VideoCard> {
                               borderRadius: BorderRadius.circular(30),
                             ),
                             child: Text(
-                              widget.duration,
+                              duration,
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: mobile ? 12 : 14,

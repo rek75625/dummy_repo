@@ -43,9 +43,9 @@ class PartnersSection extends StatelessWidget {
             ),
           ),
 
-          const SizedBox(height: 60),
+          SizedBox(height: 60),
 
-          const AutoScrollLogos(),
+          AutoScrollLogo(),
           SizedBox(height: 40),
           FadeSlideAnimation(
             delay: Duration(milliseconds: 600),

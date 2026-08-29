@@ -31,7 +31,7 @@ class HomeProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> scrollToTop() async {
+  Future<void> scrollingToTop() async {
     if (!scrollController.hasClients) return;
 
     await scrollController.animateTo(

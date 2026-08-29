@@ -1,11 +1,11 @@
-class CompanyModel {
+class CompanysModel {
   final String name;
   final String logo;
   final String category;
   final String description;
   final String website;
 
-  const CompanyModel({
+  const CompanysModel({
     required this.name,
     required this.logo,
     required this.category,
@@ -15,8 +15,8 @@ class CompanyModel {
 }
 
 class CompanyData {
-  static const List<CompanyModel> companies = [
-    CompanyModel(
+  static const List<CompanysModel> companies = [
+    CompanysModel(
       name: "Hilal Foods",
       logo: "assets/companies/hilal.jpg",
       category: "FMCG & Food",
@@ -26,7 +26,7 @@ class CompanyData {
       website: "https://hilalfoods.com.pk/",
     ),
 
-    CompanyModel(
+    CompanysModel(
       name: "Blue Band",
       logo: "assets/companies/blueband.jpeg",
       category: "Food & Nutrition",
@@ -36,7 +36,7 @@ class CompanyData {
       website: "https://www.blueband.com/en-pk/",
     ),
 
-    CompanyModel(
+    CompanysModel(
       name: "Wall's",
       logo: "assets/companies/walls.png",
       category: "Ice Cream & Frozen Desserts",
@@ -46,7 +46,7 @@ class CompanyData {
       website: "https://www.unilever.pk/",
     ),
 
-    CompanyModel(
+    CompanysModel(
       name: "L'Oréal Pakistan",
       logo: "assets/companies/loreal.png",
       category: "Beauty & Cosmetics",
@@ -56,7 +56,7 @@ class CompanyData {
       website: "https://lorealpakistan.com/",
     ),
 
-    CompanyModel(
+    CompanysModel(
       name: "MTJ",
       logo: "assets/companies/mtj.jpg",
       category: "Fashion & Lifestyle",
@@ -66,7 +66,7 @@ class CompanyData {
       website: "https://mtjonline.com/",
     ),
 
-    CompanyModel(
+    CompanysModel(
       name: "GSK Pakistan",
       logo: "assets/companies/gsk.jpg",
       category: "Healthcare & Pharmaceuticals",

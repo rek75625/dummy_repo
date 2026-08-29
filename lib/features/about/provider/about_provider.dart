@@ -8,3 +8,16 @@ class AboutProvider extends ChangeNotifier {
     "Brand Positioning",
   ];
 }
+
+class LoaderProvider with ChangeNotifier {
+  bool _load = true;
+
+  bool get load => _load;
+
+  void setLoading(bool value) {
+    if (_load == value) return;
+
+    _load = value;
+    notifyListeners();
+  }
+}

@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../model/review_model.dart';
 
-class ReviewCard extends StatelessWidget {
-  final ReviewModel review;
+class ReviewsCard extends StatelessWidget {
+  final ReviewsModel review;
 
-  const ReviewCard({super.key, required this.review});
+  const ReviewsCard({super.key, required this.review});
 
   @override
   Widget build(BuildContext context) {

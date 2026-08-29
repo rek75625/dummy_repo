@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 
-class AboutFeatureItem extends StatelessWidget {
+class AboutFeaturesItem extends StatelessWidget {
   final String title;
 
-  const AboutFeatureItem({super.key, required this.title});
+  const AboutFeaturesItem({super.key, required this.title});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8),
 
-      child: Wrap(spacing: 12, runSpacing: 12, children: [_skillChip(title)]),
+      child: Wrap(spacing: 12, runSpacing: 12, children: [_skillChips(title)]),
     );
   }
 }
 
-Widget _skillChip(String title) {
+Widget _skillChips(String title) {
   return Chip(
     label: Text(
       title,

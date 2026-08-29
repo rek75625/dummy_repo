@@ -34,7 +34,7 @@ class PortfolioSection extends StatelessWidget {
           SizedBox(height: 40),
           PortfolioFilter(),
           SizedBox(height: 50),
-          PortfolioGrid(),
+          PortfoliosGrid(),
         ],
       ),
     );

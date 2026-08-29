@@ -27,7 +27,7 @@ class PortfolioFilter extends StatelessWidget {
               color: selected ? Colors.black : Colors.white,
               fontWeight: FontWeight.w600,
             ),
-            onSelected: (_) => provider.changeCategory(index),
+            onSelected: (_) => provider.changesCategory(index),
           ),
         );
       }),

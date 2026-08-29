@@ -6,8 +6,8 @@ import 'package:provider/provider.dart';
 import '../../provider/portfolio_provider.dart';
 import 'portfolio_card.dart';
 
-class PortfolioGrid extends StatelessWidget {
-  const PortfolioGrid({super.key});
+class PortfoliosGrid extends StatelessWidget {
+  const PortfoliosGrid({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:hassanzamin/features/services/service_model.dart';
 
 class ExpandedService extends StatelessWidget {
-  final ServiceItem service;
+  final ServicesItem service;
   final int index;
 
   const ExpandedService({

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class ScrollIndicator extends StatefulWidget {
-  const ScrollIndicator({super.key});
+class ScrollingIndicator extends StatefulWidget {
+  const ScrollingIndicator({super.key});
 
   @override
-  State<ScrollIndicator> createState() => _ScrollIndicatorState();
+  State<ScrollingIndicator> createState() => _ScrollingIndicatorState();
 }
 
-class _ScrollIndicatorState extends State<ScrollIndicator>
+class _ScrollingIndicatorState extends State<ScrollingIndicator>
     with SingleTickerProviderStateMixin {
   late final AnimationController controller;
 

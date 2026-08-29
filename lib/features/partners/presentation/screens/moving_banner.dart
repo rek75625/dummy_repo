@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:marqueer/marqueer.dart';
 
-class MotionBanner extends StatelessWidget {
-  const MotionBanner({super.key});
+class MotionBanners extends StatelessWidget {
+  const MotionBanners({super.key});
 
   @override
   Widget build(BuildContext context) {

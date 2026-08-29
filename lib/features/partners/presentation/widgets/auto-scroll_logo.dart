@@ -8,14 +8,14 @@ import 'package:provider/provider.dart';
 import '../../provider/partner_provider.dart';
 import 'partner_logo_card.dart';
 
-class AutoScrollLogos extends StatefulWidget {
-  const AutoScrollLogos({super.key});
+class AutoScrollLogo extends StatefulWidget {
+  const AutoScrollLogo({super.key});
 
   @override
-  State<AutoScrollLogos> createState() => _AutoScrollLogosState();
+  State<AutoScrollLogo> createState() => _AutoScrollLogoState();
 }
 
-class _AutoScrollLogosState extends State<AutoScrollLogos> {
+class _AutoScrollLogoState extends State<AutoScrollLogo> {
   final ScrollController controller = ScrollController();
 
   Timer? timer;

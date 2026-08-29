@@ -3,43 +3,32 @@ import 'package:hassanzamin/core/widgets/custom_appbar.dart';
 import 'package:hassanzamin/features/footer/presentation/screens/footer_section.dart';
 import 'package:hassanzamin/features/footer/presentation/screens/newsletter_section.dart';
 import 'package:hassanzamin/features/services/provider/details_service_model.dart';
+import 'package:hassanzamin/features/services/service_model.dart';
 import 'package:hassanzamin/routes/back_to_home.dart';
+import 'package:provider/provider.dart';
 
-class ServicesDetailsScreen extends StatefulWidget {
+class ServicesDetailScreen extends StatefulWidget {
   final int initialIndex;
 
-  const ServicesDetailsScreen({super.key, this.initialIndex = 0});
+  const ServicesDetailScreen({super.key, this.initialIndex = 0});
 
   @override
-  State<ServicesDetailsScreen> createState() => _ServicesDetailsScreenState();
+  State<ServicesDetailScreen> createState() => _ServicesDetailScreenState();
 }
 
-class _ServicesDetailsScreenState extends State<ServicesDetailsScreen> {
-  late int selectedIndex;
-
-  ServiceDetailModule get selectedService =>
-      ServiceDetailData.services[selectedIndex];
-
-  @override
-  void initState() {
-    super.initState();
-
-    selectedIndex = widget.initialIndex.clamp(
+class _ServicesDetailScreenState extends State<ServicesDetailScreen> {
+  ServiceDetailModule _getSelectedService(BuildContext context) {
+    final provider = context.watch<SelectServiceProvider>();
+    final index = provider.selectedIndex.clamp(
       0,
       ServiceDetailData.services.length - 1,
     );
-  }
-
-  void _selectService(int index) {
-    if (selectedIndex == index) return;
-
-    setState(() {
-      selectedIndex = index;
-    });
+    return ServiceDetailData.services[index];
   }
 
   @override
   Widget build(BuildContext context) {
+    final selectedService = _getSelectedService(context);
     return Scaffold(
       backgroundColor: const Color(0xff242052),
       body: SafeArea(
@@ -48,13 +37,13 @@ class _ServicesDetailsScreenState extends State<ServicesDetailsScreen> {
           child: Column(
             children: [
               customAppBar(context),
-              _buildTopBar(),
+              _buildTopBar(context, selectedService),
 
-              _buildHero(),
+              _buildHero(context, selectedService),
 
-              _buildModuleSection(),
+              _buildModuleSection(context, selectedService),
 
-              _buildCompleteDetails(),
+              _buildCompleteDetails(context, selectedService),
 
               _buildFooter(),
               SizedBox(height: 50),
@@ -71,7 +60,10 @@ class _ServicesDetailsScreenState extends State<ServicesDetailsScreen> {
   // TOP BAR
   // ============================================================
 
-  Widget _buildTopBar() {
+  Widget _buildTopBar(
+    BuildContext context,
+    ServiceDetailModule selectedService,
+  ) {
     return LayoutBuilder(
       builder: (context, constraints) {
         final width = constraints.maxWidth;
@@ -165,7 +157,7 @@ class _ServicesDetailsScreenState extends State<ServicesDetailsScreen> {
   // HERO
   // ============================================================
 
-  Widget _buildHero() {
+  Widget _buildHero(BuildContext context, ServiceDetailModule selectedService) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(24, 35, 24, 65),
       child: LayoutBuilder(
@@ -176,11 +168,11 @@ class _ServicesDetailsScreenState extends State<ServicesDetailsScreen> {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                _buildHeroImage(),
+                _buildHeroImage(context, selectedService),
 
                 const SizedBox(height: 28),
 
-                _buildHeroContent(),
+                _buildHeroContent(context, selectedService),
               ],
             );
           }
@@ -188,11 +180,17 @@ class _ServicesDetailsScreenState extends State<ServicesDetailsScreen> {
           return Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Expanded(flex: 48, child: _buildHeroImage()),
+              Expanded(
+                flex: 48,
+                child: _buildHeroImage(context, selectedService),
+              ),
 
               const SizedBox(width: 55),
 
-              Expanded(flex: 52, child: _buildHeroContent()),
+              Expanded(
+                flex: 52,
+                child: _buildHeroContent(context, selectedService),
+              ),
             ],
           );
         },
@@ -204,7 +202,10 @@ class _ServicesDetailsScreenState extends State<ServicesDetailsScreen> {
   // HERO IMAGE
   // ============================================================
 
-  Widget _buildHeroImage() {
+  Widget _buildHeroImage(
+    BuildContext context,
+    ServiceDetailModule selectedService,
+  ) {
     return AnimatedSwitcher(
       duration: const Duration(milliseconds: 450),
       switchInCurve: Curves.easeOutCubic,
@@ -235,7 +236,10 @@ class _ServicesDetailsScreenState extends State<ServicesDetailsScreen> {
   // HERO CONTENT
   // ============================================================
 
-  Widget _buildHeroContent() {
+  Widget _buildHeroContent(
+    BuildContext context,
+    ServiceDetailModule selectedService,
+  ) {
     return AnimatedSwitcher(
       duration: const Duration(milliseconds: 350),
 
@@ -256,7 +260,7 @@ class _ServicesDetailsScreenState extends State<ServicesDetailsScreen> {
         key: ValueKey(selectedService.number),
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _buildNumber(),
+          _buildNumber(context, selectedService),
 
           const SizedBox(height: 18),
 
@@ -307,17 +311,20 @@ class _ServicesDetailsScreenState extends State<ServicesDetailsScreen> {
 
           const SizedBox(height: 22),
 
-          _buildHeroPoints(),
+          _buildHeroPoints(context, selectedService),
 
           const SizedBox(height: 30),
 
-          _buildHeroMetrics(),
+          _buildHeroMetrics(context, selectedService),
         ],
       ),
     );
   }
 
-  Widget _buildNumber() {
+  Widget _buildNumber(
+    BuildContext context,
+    ServiceDetailModule selectedService,
+  ) {
     return Text(
       selectedService.number,
       style: const TextStyle(
@@ -333,7 +340,10 @@ class _ServicesDetailsScreenState extends State<ServicesDetailsScreen> {
   // HERO POINTS
   // ============================================================
 
-  Widget _buildHeroPoints() {
+  Widget _buildHeroPoints(
+    BuildContext context,
+    ServiceDetailModule selectedService,
+  ) {
     return Wrap(
       spacing: 9,
       runSpacing: 9,
@@ -375,7 +385,10 @@ class _ServicesDetailsScreenState extends State<ServicesDetailsScreen> {
   // HERO METRICS
   // ============================================================
 
-  Widget _buildHeroMetrics() {
+  Widget _buildHeroMetrics(
+    BuildContext context,
+    ServiceDetailModule selectedService,
+  ) {
     return Row(
       children: [
         _HeroMetric(
@@ -397,7 +410,10 @@ class _ServicesDetailsScreenState extends State<ServicesDetailsScreen> {
   // MODULES
   // ============================================================
 
-  Widget _buildModuleSection() {
+  Widget _buildModuleSection(
+    BuildContext context,
+    ServiceDetailModule selectedService,
+  ) {
     return Container(
       width: double.infinity,
       color: const Color(0xff1c1944),
@@ -434,6 +450,8 @@ class _ServicesDetailsScreenState extends State<ServicesDetailsScreen> {
                       ServiceDetailData.services[index],
                       index,
                       mobile,
+                      context,
+                      selectedService,
                     ),
                   );
                 }),
@@ -445,13 +463,21 @@ class _ServicesDetailsScreenState extends State<ServicesDetailsScreen> {
     );
   }
 
-  Widget _buildModuleCard(ServiceDetailModule service, int index, bool mobile) {
+  Widget _buildModuleCard(
+    ServiceDetailModule service,
+    int index,
+    bool mobile,
+    BuildContext context,
+    ServiceDetailModule selectedService,
+  ) {
+    final selectedIndex = context.watch<SelectServiceProvider>().selectedIndex;
+
     final bool selected = index == selectedIndex;
 
     return MouseRegion(
       cursor: SystemMouseCursors.click,
       child: GestureDetector(
-        onTap: () => _selectService(index),
+        onTap: () => context.read<SelectServiceProvider>().selectService(index),
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 350),
           curve: Curves.easeOutCubic,
@@ -547,7 +573,10 @@ class _ServicesDetailsScreenState extends State<ServicesDetailsScreen> {
   // COMPLETE DETAILS
   // ============================================================
 
-  Widget _buildCompleteDetails() {
+  Widget _buildCompleteDetails(
+    BuildContext context,
+    ServiceDetailModule selectedService,
+  ) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(24, 75, 24, 75),
       child: AnimatedSwitcher(
@@ -557,12 +586,20 @@ class _ServicesDetailsScreenState extends State<ServicesDetailsScreen> {
           return FadeTransition(opacity: animation, child: child);
         },
 
-        child: _buildDetailsContent(key: ValueKey(selectedService.number)),
+        child: _buildDetailsContent(
+          context,
+          selectedService,
+          key: ValueKey(selectedService.number),
+        ),
       ),
     );
   }
 
-  Widget _buildDetailsContent({required Key key}) {
+  Widget _buildDetailsContent(
+    BuildContext context,
+    ServiceDetailModule selectedService, {
+    required Key key,
+  }) {
     return Container(
       key: key,
       width: double.infinity,
@@ -636,9 +673,9 @@ class _ServicesDetailsScreenState extends State<ServicesDetailsScreen> {
               if (constraints.maxWidth < 750) {
                 return Column(
                   children: [
-                    _capabilityBox(),
+                    _capabilityBox(context, selectedService),
                     const SizedBox(height: 18),
-                    _processBox(),
+                    _processBox(context, selectedService),
                   ],
                 );
               }
@@ -646,11 +683,11 @@ class _ServicesDetailsScreenState extends State<ServicesDetailsScreen> {
               return Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Expanded(child: _capabilityBox()),
+                  Expanded(child: _capabilityBox(context, selectedService)),
 
                   const SizedBox(width: 20),
 
-                  Expanded(child: _processBox()),
+                  Expanded(child: _processBox(context, selectedService)),
                 ],
               );
             },
@@ -697,7 +734,10 @@ class _ServicesDetailsScreenState extends State<ServicesDetailsScreen> {
   // CAPABILITIES
   // ============================================================
 
-  Widget _capabilityBox() {
+  Widget _capabilityBox(
+    BuildContext context,
+    ServiceDetailModule selectedService,
+  ) {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(28),
@@ -757,7 +797,10 @@ class _ServicesDetailsScreenState extends State<ServicesDetailsScreen> {
   // PROCESS
   // ============================================================
 
-  Widget _processBox() {
+  Widget _processBox(
+    BuildContext context,
+    ServiceDetailModule selectedService,
+  ) {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(28),
