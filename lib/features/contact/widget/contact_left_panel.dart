@@ -89,6 +89,7 @@ class ContactLeftPanel extends StatelessWidget {
             title: "Digital Marketing",
             subtitle:
                 "Social Media Management • Personal Branding • Digital Strategy ",
+            index: 0,
           ),
           const SizedBox(height: 18),
           const FeatureCard(
@@ -96,6 +97,7 @@ class ContactLeftPanel extends StatelessWidget {
             title: "Data Driven Growth",
             subtitle:
                 "Clean & scalable Network connectivity • Data Analytics • Growth Hacking",
+            index: 1,
           ),
 
           const SizedBox(height: 18),
@@ -105,6 +107,7 @@ class ContactLeftPanel extends StatelessWidget {
             title: "Google Ecosystem Experties",
             subtitle:
                 "Productivity • Services • Advertising • Analytics and more",
+            index: 2,
           ),
 
           const SizedBox(height: 40),

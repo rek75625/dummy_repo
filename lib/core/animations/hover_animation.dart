@@ -3,18 +3,28 @@ import 'package:provider/provider.dart';
 
 class HoverScaleAnimation extends StatelessWidget {
   final Widget child;
+  final int index;
 
-  const HoverScaleAnimation({super.key, required this.child});
+  const HoverScaleAnimation({
+    super.key,
+    required this.child,
+    required this.index,
+  });
 
   @override
   Widget build(BuildContext context) {
-    // 1. Correct: 'watch' tells the UI to rebuild when the hover state changes
-    final isHovered = context.watch<MouseRegionProvider>().hover;
+    final isHovered = context.select<MouseRegionProvider, bool>(
+      (provider) => provider.isHovered(index),
+    );
 
     return MouseRegion(
-      // 2. FIXED: Changed 'watch' to 'read' inside callbacks to prevent runtime crashes
-      onEnter: (_) => context.read<MouseRegionProvider>().setHover(true),
-      onExit: (_) => context.read<MouseRegionProvider>().setHover(false),
+      onEnter: (_) {
+        context.read<MouseRegionProvider>().setHover(index);
+      },
+
+      onExit: (_) {
+        context.read<MouseRegionProvider>().clearHover(index);
+      },
       child: AnimatedScale(
         scale: isHovered ? 1.04 : 1.0,
         duration: const Duration(milliseconds: 250),
@@ -24,15 +34,33 @@ class HoverScaleAnimation extends StatelessWidget {
   }
 }
 
-class MouseRegionProvider with ChangeNotifier {
-  bool _hover = false;
+class MouseRegionProvider extends ChangeNotifier {
+  int? _hoveredIndex;
 
-  bool get hover => _hover;
+  int? get hoveredIndex => _hoveredIndex;
 
-  void setHover(bool value) {
-    if (_hover != value) {
-      _hover = value;
-      notifyListeners();
-    }
+  bool isHovered(int index) {
+    return _hoveredIndex == index;
+  }
+
+  void setHover(int index) {
+    if (_hoveredIndex == index) return;
+
+    _hoveredIndex = index;
+    notifyListeners();
+  }
+
+  void clearHover(int index) {
+    if (_hoveredIndex != index) return;
+
+    _hoveredIndex = null;
+    notifyListeners();
+  }
+
+  void clearAll() {
+    if (_hoveredIndex == null) return;
+
+    _hoveredIndex = null;
+    notifyListeners();
   }
 }

@@ -8,6 +8,7 @@ import 'package:hassanzamin/features/home/provider/home_provider.dart';
 import 'package:hassanzamin/features/partners/provider/partner_provider.dart';
 import 'package:hassanzamin/features/portfolio/provider/portfolio_provider.dart';
 import 'package:hassanzamin/features/reviews/provider/review_provider.dart';
+import 'package:hassanzamin/features/services/presentation/widgets/service_card_hover.dart';
 import 'package:hassanzamin/features/services/provider/detail_screen_card_provider.dart';
 import 'package:hassanzamin/features/services/provider/service_provider.dart';
 import 'package:hassanzamin/features/services/service_model.dart';
@@ -41,6 +42,8 @@ Future<void> main() async {
         ChangeNotifierProvider(create: (_) => LoaderProvider()),
         ChangeNotifierProvider(create: (_) => SelectServicesProvider()),
         ChangeNotifierProvider(create: (_) => DetailScreenCardProvider()),
+        ChangeNotifierProvider(create: (_) => ServiceCardHoverProvider()),
+        ChangeNotifierProvider(create: (_) => MouseRegionForPartnerProvider()),
       ],
       child: const PortfolioApp(),
     ),

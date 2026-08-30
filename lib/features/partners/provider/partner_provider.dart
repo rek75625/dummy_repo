@@ -18,16 +18,32 @@ class PartnerProvider extends ChangeNotifier {
 }
 
 class MouseRegionForPartnerProvider extends ChangeNotifier {
-  bool _hovered = false;
+  int? _hoveredIndex;
 
-  bool get hovered => _hovered;
+  int? get hoveredIndex => _hoveredIndex;
 
-  void setHover(bool value) {
-    if (!kIsWeb) return;
+  bool isHovered(int index) {
+    return _hoveredIndex == index;
+  }
 
-    if (_hovered == value) return;
+  void setHover(int index) {
+    if (_hoveredIndex == index) return;
 
-    _hovered = value;
+    _hoveredIndex = index;
+    notifyListeners();
+  }
+
+  void clearHover(int index) {
+    if (_hoveredIndex != index) return;
+
+    _hoveredIndex = null;
+    notifyListeners();
+  }
+
+  void clearAll() {
+    if (_hoveredIndex == null) return;
+
+    _hoveredIndex = null;
     notifyListeners();
   }
 }

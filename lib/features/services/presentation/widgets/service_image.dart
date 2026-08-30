@@ -1,32 +1,34 @@
 import 'package:flutter/material.dart';
+import 'package:hassanzamin/core/animations/hover_animation.dart';
+import 'package:provider/provider.dart';
 
-class ServicesImage extends StatefulWidget {
+class ServicesImage extends StatelessWidget {
   final String imagePath;
+  final int index;
 
   const ServicesImage({
     super.key,
     this.imagePath = 'assets/images/aboutme.jpeg',
+    required this.index,
   });
 
   @override
-  State<ServicesImage> createState() => _ServicesImageState();
-}
-
-class _ServicesImageState extends State<ServicesImage> {
-  bool _hovered = false;
-
-  @override
   Widget build(BuildContext context) {
+    final isHover = context.select<MouseRegionProvider, bool>(
+      (provider) => provider.isHovered(index),
+    );
     return MouseRegion(
       cursor: SystemMouseCursors.click,
+
       onEnter: (_) {
-        setState(() => _hovered = true);
+        context.read<MouseRegionProvider>().setHover(index);
       },
+
       onExit: (_) {
-        setState(() => _hovered = false);
+        context.read<MouseRegionProvider>().clearHover(index);
       },
       child: AnimatedScale(
-        scale: _hovered ? 1.015 : 1.0,
+        scale: isHover ? 1.015 : 1.0,
         duration: const Duration(milliseconds: 350),
         curve: Curves.easeOut,
         child: AnimatedContainer(
@@ -37,8 +39,8 @@ class _ServicesImageState extends State<ServicesImage> {
             borderRadius: BorderRadius.circular(28),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withValues(alpha: _hovered ? 0.30 : 0.20),
-                blurRadius: _hovered ? 35 : 25,
+                color: Colors.black.withValues(alpha: isHover ? 0.30 : 0.20),
+                blurRadius: isHover ? 35 : 25,
                 offset: const Offset(0, 15),
               ),
             ],
@@ -48,7 +50,7 @@ class _ServicesImageState extends State<ServicesImage> {
             child: AspectRatio(
               aspectRatio: 0.86,
               child: Image.asset(
-                widget.imagePath,
+                imagePath,
                 fit: BoxFit.cover,
                 errorBuilder: (context, error, stackTrace) {
                   return Container(

@@ -8,6 +8,7 @@ class VideoCard extends StatelessWidget {
   final String title;
   final String duration;
   final VoidCallback onTap;
+  final int index;
 
   const VideoCard({
     super.key,
@@ -15,12 +16,15 @@ class VideoCard extends StatelessWidget {
     required this.title,
     required this.duration,
     required this.onTap,
+    required this.index,
   });
 
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
-    final isHovered = context.watch<MouseRegionProvider>().hover;
+    final isHovered = context.select<MouseRegionProvider, bool>(
+      (provider) => provider.isHovered(index),
+    );
 
     final bool mobile = width < 768;
     final bool tablet = width >= 768 && width < 1200;
@@ -44,10 +48,10 @@ class VideoCard extends StatelessWidget {
 
     return MouseRegion(
       onEnter: enableHover
-          ? (_) => context.read<MouseRegionProvider>().setHover(true)
+          ? (_) => context.read<MouseRegionProvider>().setHover(index)
           : null,
       onExit: enableHover
-          ? (_) => context.read<MouseRegionProvider>().setHover(false)
+          ? (_) => context.read<MouseRegionProvider>().setHover(index)
           : null,
       child: AnimatedScale(
         duration: const Duration(milliseconds: 250),

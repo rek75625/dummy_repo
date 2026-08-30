@@ -110,7 +110,7 @@ class PartnersDetailsScreen extends StatelessWidget {
                     ) {
                       final CompanysModel company = companies[index];
 
-                      return CompanysCard(company: company);
+                      return CompanysCard(company: company, index: index);
                     }, childCount: companies.length),
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: columns,

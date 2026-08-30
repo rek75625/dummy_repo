@@ -118,6 +118,7 @@ class AboutDetailScreen extends StatelessWidget {
                   ),
                 );
               },
+              index: 1,
             ),
             SizedBox(height: 60),
             Column(

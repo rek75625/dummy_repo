@@ -5,18 +5,30 @@ import 'package:vector_math/vector_math_64.dart' show Vector3;
 
 class AnimatedCardWidget extends StatelessWidget {
   final Widget child;
+  final int index;
 
-  const AnimatedCardWidget({super.key, required this.child});
+  const AnimatedCardWidget({
+    super.key,
+    required this.child,
+    required this.index,
+  });
 
   @override
   Widget build(BuildContext context) {
-    // 1. Correct: use watch here to listen for UI rebuilds
-    final isHovered = context.watch<MouseRegionProvider>().hover;
+    final isHovered = context.select<MouseRegionProvider, bool>(
+      (provider) => provider.isHovered(index),
+    );
 
     return MouseRegion(
-      // 2. FIXED: Changed watch to read inside callbacks to prevent runtime crashes
-      onEnter: (_) => context.read<MouseRegionProvider>().setHover(true),
-      onExit: (_) => context.read<MouseRegionProvider>().setHover(false),
+      cursor: SystemMouseCursors.click,
+
+      onEnter: (_) {
+        context.read<MouseRegionProvider>().setHover(index);
+      },
+
+      onExit: (_) {
+        context.read<MouseRegionProvider>().clearHover(index);
+      },
 
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 250),

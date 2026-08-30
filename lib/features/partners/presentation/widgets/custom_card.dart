@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:hassanzamin/core/animations/hover_animation.dart';
 import 'package:hassanzamin/features/partners/models/partner_model.dart';
-import 'package:hassanzamin/features/partners/provider/partner_provider.dart';
 import 'package:provider/provider.dart';
 
 class CompanysCard extends StatelessWidget {
+  final int index;
   final CompanysModel company;
 
-  const CompanysCard({super.key, required this.company});
+  const CompanysCard({super.key, required this.company, required this.index});
 
   @override
   Widget build(BuildContext context) {
-    final isHovered = context.watch<MouseRegionForPartnerProvider>().hovered;
+    final isHovered = context.select<MouseRegionProvider, bool>(
+      (provider) => provider.isHovered(index),
+    );
 
     return LayoutBuilder(
       builder: (context, constraints) {
@@ -24,13 +27,13 @@ class CompanysCard extends StatelessWidget {
         return MouseRegion(
           cursor: SystemMouseCursors.click,
 
-          // IMPORTANT:
-          // read() inside event callbacks
-          onEnter: (_) =>
-              context.read<MouseRegionForPartnerProvider>().setHover(true),
+          onEnter: (_) {
+            context.read<MouseRegionProvider>().setHover(index);
+          },
 
-          onExit: (_) =>
-              context.read<MouseRegionForPartnerProvider>().setHover(false),
+          onExit: (_) {
+            context.read<MouseRegionProvider>().clearHover(index);
+          },
 
           child: GestureDetector(
             onTap: () => _showCompanyDetails(context),

@@ -42,11 +42,15 @@ class HerosLeftContent extends StatelessWidget {
 
             Row(
               children: [
-                PrimaryButton(text: "Read More", onPressed: () {}),
+                PrimaryButton(text: "Read More", onPressed: () {}, index: 0),
 
                 const SizedBox(width: 20),
 
-                SecondaryButton(text: "Our Services", onPressed: () {}),
+                SecondaryButton(
+                  text: "Our Services",
+                  onPressed: () {},
+                  index: 1,
+                ),
               ],
             ),
           ],

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hassanzamin/core/animations/hover_animation.dart';
 import 'package:hassanzamin/core/constants/app_colors.dart';
 import 'package:hassanzamin/core/widgets/custom_appbar.dart';
 import 'package:hassanzamin/features/footer/presentation/screens/footer_section.dart';
 import 'package:hassanzamin/features/footer/presentation/screens/newsletter_section.dart';
-import 'package:hassanzamin/features/partners/provider/partner_provider.dart';
 import 'package:hassanzamin/routes/back_to_home.dart';
 import 'package:provider/provider.dart';
 
@@ -26,7 +26,9 @@ class PortfolioDetailsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final width = MediaQuery.sizeOf(context).width;
 
-    final isHovered = context.watch<MouseRegionForPartnerProvider>().hovered;
+    final isHovered = context.select<MouseRegionProvider, bool>(
+      (provider) => provider.isHovered(index),
+    );
 
     final bool isMobile = width < 700;
     final bool isTablet = width >= 700 && width < 1150;
@@ -487,18 +489,16 @@ class PortfolioDetailsScreen extends StatelessWidget {
         : width < 1150
         ? 500
         : 650;
-
     return MouseRegion(
       cursor: SystemMouseCursors.click,
 
       onEnter: (_) {
-        context.read<MouseRegionForPartnerProvider>().setHover(true);
+        context.read<MouseRegionProvider>().setHover(index);
       },
 
       onExit: (_) {
-        context.read<MouseRegionForPartnerProvider>().setHover(false);
+        context.read<MouseRegionProvider>().clearHover(index);
       },
-
       child: AnimatedScale(
         scale: isHovered ? 1.012 : 1.0,
         duration: const Duration(milliseconds: 400),

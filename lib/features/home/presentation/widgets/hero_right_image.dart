@@ -15,6 +15,7 @@ class HerosRightImage extends StatelessWidget {
           child: Hero(
             tag: "profile",
             child: AnimatedCardWidget(
+              index: 1,
               child: GlassCard(
                 child: SizedBox(
                   width: 520,

@@ -56,7 +56,7 @@ class _AutoScrollLogoState extends State<AutoScrollLogo> {
         physics: const NeverScrollableScrollPhysics(),
         itemCount: items.length,
         itemBuilder: (_, index) {
-          return PartnerLogoCard(image: items[index]);
+          return PartnerLogoCard(image: items[index], index: index);
         },
       ),
     );

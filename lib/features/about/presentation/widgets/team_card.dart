@@ -2,7 +2,6 @@
 
 import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:flutter/foundation.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hassanzamin/core/animations/hover_animation.dart';
 import 'package:hassanzamin/features/about/presentation/models/team_member_model.dart';
@@ -11,23 +10,29 @@ import 'package:provider/provider.dart';
 
 class TeamCards extends StatelessWidget {
   final TeamMember member;
+  final int index;
 
-  const TeamCards({super.key, required this.member});
+  const TeamCards({super.key, required this.member, required this.index});
 
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
-    final isHovered = context.watch<MouseRegionProvider>().hover;
 
     final bool mobile = width < 768;
+    final isHovered = context.select<MouseRegionProvider, bool>(
+      (provider) => provider.isHovered(index),
+    );
 
     return MouseRegion(
-      onEnter: kIsWeb
-          ? (_) => context.read<MouseRegionProvider>().setHover(true)
-          : null,
-      onExit: kIsWeb
-          ? (_) => context.read<MouseRegionProvider>().setHover(false)
-          : null,
+      cursor: SystemMouseCursors.click,
+
+      onEnter: (_) {
+        context.read<MouseRegionProvider>().setHover(index);
+      },
+
+      onExit: (_) {
+        context.read<MouseRegionProvider>().clearHover(index);
+      },
 
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 350),

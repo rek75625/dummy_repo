@@ -18,7 +18,7 @@ class ServicesDetailScreen extends StatefulWidget {
 
 class _ServicesDetailScreenState extends State<ServicesDetailScreen> {
   ServiceDetailModule _getSelectedService(BuildContext context) {
-    final provider = context.watch<SelectServiceProvider>();
+    final provider = context.watch<SelectServicesProvider>();
     final index = provider.selectedIndex.clamp(
       0,
       ServiceDetailData.services.length - 1,
@@ -470,14 +470,15 @@ class _ServicesDetailScreenState extends State<ServicesDetailScreen> {
     BuildContext context,
     ServiceDetailModule selectedService,
   ) {
-    final selectedIndex = context.watch<SelectServiceProvider>().selectedIndex;
+    final selectedIndex = context.watch<SelectServicesProvider>().selectedIndex;
 
     final bool selected = index == selectedIndex;
 
     return MouseRegion(
       cursor: SystemMouseCursors.click,
       child: GestureDetector(
-        onTap: () => context.read<SelectServiceProvider>().selectService(index),
+        onTap: () =>
+            context.read<SelectServicesProvider>().selectService(index),
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 350),
           curve: Curves.easeOutCubic,

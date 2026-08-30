@@ -8,18 +8,22 @@ class FeatureCard extends StatelessWidget {
   final IconData icon;
   final String title;
   final String subtitle;
+  final int index;
 
   const FeatureCard({
     super.key,
     required this.icon,
     required this.title,
     required this.subtitle,
+    required this.index,
   });
 
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
-    final isHovered = context.watch<MouseRegionProvider>().hover;
+    final isHovered = context.select<MouseRegionProvider, bool>(
+      (provider) => provider.isHovered(index),
+    );
 
     final bool mobile = width < 768;
     final bool tablet = width >= 768 && width < 1200;
@@ -28,10 +32,10 @@ class FeatureCard extends StatelessWidget {
 
     return MouseRegion(
       onEnter: enableHover
-          ? (_) => context.read<MouseRegionProvider>().setHover(true)
+          ? (_) => context.read<MouseRegionProvider>().setHover(index)
           : null,
       onExit: enableHover
-          ? (_) => context.read<MouseRegionProvider>().setHover(false)
+          ? (_) => context.read<MouseRegionProvider>().setHover(index)
           : null,
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 300),

@@ -5,31 +5,34 @@ import 'package:vector_math/vector_math_64.dart' show Vector3;
 
 import '../constants/app_colors.dart';
 
-class SecondaryButton extends StatefulWidget {
+class SecondaryButton extends StatelessWidget {
   final String text;
-
+  final int index;
   final VoidCallback onPressed;
 
   const SecondaryButton({
     super.key,
     required this.text,
     required this.onPressed,
+    required this.index,
   });
 
   @override
-  State<SecondaryButton> createState() => _SecondaryButtonState();
-}
-
-class _SecondaryButtonState extends State<SecondaryButton> {
-  @override
   Widget build(BuildContext context) {
-    // 2. Watch the isolated hover state
-    final isHovered = context.watch<MouseRegionProvider>().hover;
+    final isHovered = context.select<MouseRegionProvider, bool>(
+      (provider) => provider.isHovered(index),
+    );
 
     return MouseRegion(
-      // 3. Use 'read' inside your interactions
-      onEnter: (_) => context.read<MouseRegionProvider>().setHover(true),
-      onExit: (_) => context.read<MouseRegionProvider>().setHover(false),
+      cursor: SystemMouseCursors.click,
+
+      onEnter: (_) {
+        context.read<MouseRegionProvider>().setHover(index);
+      },
+
+      onExit: (_) {
+        context.read<MouseRegionProvider>().clearHover(index);
+      },
 
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 250),
@@ -52,9 +55,9 @@ class _SecondaryButtonState extends State<SecondaryButton> {
             ),
           ),
 
-          onPressed: widget.onPressed,
+          onPressed: onPressed,
 
-          child: Text(widget.text, style: const TextStyle(color: Colors.white)),
+          child: Text(text, style: const TextStyle(color: Colors.white)),
         ),
       ),
     );

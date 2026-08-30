@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hassanzamin/features/partners/provider/partner_provider.dart';
 
 import 'package:hassanzamin/features/services/presentation/widgets/collapsed_service.dart';
 import 'package:hassanzamin/features/services/presentation/widgets/expanded_service.dart';
@@ -17,12 +18,16 @@ class ServicesHoverCards extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isHover = context.watch<ServiceCardHoverProvider>().isHovered;
+    final isHovered = context.select<MouseRegionForPartnerProvider, bool>(
+      (provider) => provider.isHovered(index),
+    );
     return MouseRegion(
       cursor: SystemMouseCursors.click,
 
-      onEnter: (_) => context.read<ServiceCardHoverProvider>().setHover(true),
-      onExit: (_) => context.read<ServiceCardHoverProvider>().setHover(false),
+      onEnter: (_) =>
+          context.read<MouseRegionForPartnerProvider>().setHover(index),
+      onExit: (_) =>
+          context.read<MouseRegionForPartnerProvider>().setHover(index),
 
       child: GestureDetector(
         onTap: () {
@@ -40,21 +45,21 @@ class ServicesHoverCards extends StatelessWidget {
             width: double.infinity,
             margin: const EdgeInsets.symmetric(horizontal: 30, vertical: 9),
 
-            padding: EdgeInsets.all(isHover ? 20 : 26),
+            padding: EdgeInsets.all(isHovered ? 20 : 26),
 
             decoration: BoxDecoration(
-              color: isHover
+              color: isHovered
                   ? const Color(0xffF7F7F8)
                   : const Color(0xff242052),
 
               borderRadius: BorderRadius.circular(26),
 
               border: Border.all(
-                color: isHover ? const Color(0xffffcc33) : Colors.white70,
+                color: isHovered ? const Color(0xffffcc33) : Colors.white70,
                 width: 1.3,
               ),
 
-              boxShadow: isHover
+              boxShadow: isHovered
                   ? [
                       BoxShadow(
                         color: Colors.black.withValues(alpha: .20),
@@ -79,7 +84,7 @@ class ServicesHoverCards extends StatelessWidget {
                 return FadeTransition(opacity: animation, child: child);
               },
 
-              child: isHover
+              child: isHovered
                   ? ExpandedService(
                       key: const ValueKey('expanded-service'),
                       service: service,
