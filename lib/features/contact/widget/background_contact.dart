@@ -1,14 +1,14 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 
-class ContactBackground extends StatefulWidget {
-  const ContactBackground({super.key});
+class ContactsBackground extends StatefulWidget {
+  const ContactsBackground({super.key});
 
   @override
-  State<ContactBackground> createState() => _ContactBackgroundState();
+  State<ContactsBackground> createState() => _ContactsBackgroundState();
 }
 
-class _ContactBackgroundState extends State<ContactBackground>
+class _ContactsBackgroundState extends State<ContactsBackground>
     with SingleTickerProviderStateMixin {
   late final AnimationController _controller;
 

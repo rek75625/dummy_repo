@@ -11,7 +11,7 @@ class PortfolioSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.symmetric(horizontal: 60, vertical: 120),
+      padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 50),
       color: AppColors.background,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -35,6 +35,7 @@ class PortfolioSection extends StatelessWidget {
           PortfolioFilter(),
           SizedBox(height: 50),
           PortfoliosGrid(),
+          SizedBox(height: 50),
         ],
       ),
     );

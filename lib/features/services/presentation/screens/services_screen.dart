@@ -12,10 +12,10 @@ class ServicesScreen extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: 40),
+          padding: EdgeInsets.symmetric(horizontal: 50, vertical: 60),
           child: _headings(context),
         ),
-        SizedBox(height: 20),
+
         Container(
           color: Colors.transparent,
           child: ListView.builder(
@@ -27,6 +27,7 @@ class ServicesScreen extends StatelessWidget {
             },
           ),
         ),
+        SizedBox(height: 80),
       ],
     );
   }

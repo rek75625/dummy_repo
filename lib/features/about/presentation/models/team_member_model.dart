@@ -10,35 +10,45 @@ class TeamMember {
   });
 }
 
-final List<TeamMember> teamMembers = [
+final List<TeamMember> members = const [
   TeamMember(
-    image: "assets/images/team1.jpg",
+    image: "assets/images/male.jpg",
     name: "Hassan Zamin",
-    designation: "CEO & Founder",
+    designation: "CEO & Founder \n Digital Marketing Expert",
   ),
   TeamMember(
-    image: "assets/images/team2.jpg",
-    name: "Ali Khan",
-    designation: "Marketing Expert",
-  ),
-  TeamMember(
-    image: "assets/images/team3.jpg",
-    name: "Usman Ahmed",
-    designation: "Graphic Designer",
-  ),
-  TeamMember(
-    image: "assets/images/team4.jpg",
-    name: "Sara Noor",
-    designation: "Social Media Manager",
-  ),
-  TeamMember(
-    image: "assets/images/team5.jpg",
-    name: "Hamza",
-    designation: "Video Editor",
-  ),
-  TeamMember(
-    image: "assets/images/team6.jpg",
+    image: "assets/images/female.jpg",
     name: "Fatima",
-    designation: "Content Writer",
+    designation: "Co-Founder, Accountant & Social Media Manager",
+  ),
+  TeamMember(
+    image: "assets/images/male.jpg",
+    name: "RahmatUllah",
+    designation: "Teacher, Education Manager & Digital Marketer",
+  ),
+  TeamMember(
+    image: "assets/images/male.jpg",
+    name: "Ahmed",
+    designation: "Social Media Manager & Content Creator",
+  ),
+  TeamMember(
+    image: "assets/images/male.jpg",
+    name: "Arsalan",
+    designation: "Shopify Platform Expert, Social Media Manager",
+  ),
+  TeamMember(
+    image: "assets/images/female.jpg",
+    name: "Sibha",
+    designation: "Social Media Influencer & Business Partner",
+  ),
+  TeamMember(
+    image: "assets/images/female.jpg",
+    name: "Maheen",
+    designation: "Doctor, Event Manager & Business Partner",
+  ),
+  TeamMember(
+    image: "assets/images/female.jpg",
+    name: "Alina",
+    designation: "Asistant Social Media Manager & Content Creator",
   ),
 ];

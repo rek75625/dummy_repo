@@ -92,22 +92,20 @@ class HomeScreen extends StatelessWidget {
 
               AboutScreen(key: provider.aboutKey, isDetails: true),
 
-              SizedBox(height: 80),
-
-              MotionBanners(),
-
-              SizedBox(height: 40),
-
-              PartnersSection(key: provider.partnersKey),
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 80),
+                child: MotionBanners(),
+              ),
 
               ServicesScreen(key: provider.servicesKey),
 
               PortfolioSection(key: provider.portfolioKey),
 
+              PartnersSection(key: provider.partnersKey),
+
               ReviewsSection(key: provider.reviewKey),
 
               SkillsSection(key: provider.skillsKey),
-              SizedBox(height: 30),
 
               NewsletterSection(key: provider.newsletterKey),
 

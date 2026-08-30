@@ -7,22 +7,19 @@ import 'package:hassanzamin/features/services/service_model.dart';
 import 'package:hassanzamin/routes/back_to_home.dart';
 import 'package:provider/provider.dart';
 
-class ServicesDetailScreen extends StatefulWidget {
+class ServicesDetailScreen extends StatelessWidget {
   final int initialIndex;
 
   const ServicesDetailScreen({super.key, this.initialIndex = 0});
 
-  @override
-  State<ServicesDetailScreen> createState() => _ServicesDetailScreenState();
-}
-
-class _ServicesDetailScreenState extends State<ServicesDetailScreen> {
   ServiceDetailModule _getSelectedService(BuildContext context) {
     final provider = context.watch<SelectServicesProvider>();
+
     final index = provider.selectedIndex.clamp(
       0,
       ServiceDetailData.services.length - 1,
     );
+
     return ServiceDetailData.services[index];
   }
 
@@ -136,11 +133,7 @@ class _ServicesDetailScreenState extends State<ServicesDetailScreen> {
                         ),
                       ),
                       SizedBox(height: isMobile ? 15 : 25),
-                      CustomBackToHome(
-                        title: ServiceDetailData
-                            .services[widget.initialIndex]
-                            .title,
-                      ),
+                      CustomBackToHome(title: selectedService.title),
                       SizedBox(height: 20),
                     ],
                   ),
@@ -470,7 +463,7 @@ class _ServicesDetailScreenState extends State<ServicesDetailScreen> {
     BuildContext context,
     ServiceDetailModule selectedService,
   ) {
-    final selectedIndex = context.watch<SelectServicesProvider>().selectedIndex;
+    final selectedIndex = context.read<SelectServicesProvider>().selectedIndex;
 
     final bool selected = index == selectedIndex;
 

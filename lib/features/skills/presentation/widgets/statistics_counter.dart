@@ -3,17 +3,21 @@ import 'package:hassanzamin/features/skills/provider/skill_provider.dart';
 import 'package:hassanzamin/repositories/responsive.dart';
 import 'package:provider/provider.dart';
 
-class StatisticCounter extends StatefulWidget {
+class StatisticsCounter extends StatefulWidget {
   final int value;
   final String title;
 
-  const StatisticCounter({super.key, required this.value, required this.title});
+  const StatisticsCounter({
+    super.key,
+    required this.value,
+    required this.title,
+  });
 
   @override
-  State<StatisticCounter> createState() => _StatisticCounterState();
+  State<StatisticsCounter> createState() => _StatisticsCounterState();
 }
 
-class _StatisticCounterState extends State<StatisticCounter>
+class _StatisticsCounterState extends State<StatisticsCounter>
     with SingleTickerProviderStateMixin {
   late final AnimationController _controller;
   late final Animation<int> _animation;
@@ -56,7 +60,7 @@ class _StatisticCounterState extends State<StatisticCounter>
         ? 20
         : tablet
         ? 16
-        : 10;
+        : 2;
 
     return AnimatedBuilder(
       animation: _animation,
@@ -119,7 +123,7 @@ class StatisticsRow extends StatelessWidget {
             .map(
               (e) => Padding(
                 padding: const EdgeInsets.only(bottom: 16),
-                child: StatisticCounter(value: e.value, title: e.title),
+                child: StatisticsCounter(value: e.value, title: e.title),
               ),
             )
             .toList(),
@@ -140,7 +144,7 @@ class StatisticsRow extends StatelessWidget {
         itemBuilder: (_, index) {
           final stat = provider.statistics[index];
 
-          return StatisticCounter(value: stat.value, title: stat.title);
+          return StatisticsCounter(value: stat.value, title: stat.title);
         },
       );
     }
@@ -151,7 +155,7 @@ class StatisticsRow extends StatelessWidget {
             (e) => Expanded(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10),
-                child: StatisticCounter(value: e.value, title: e.title),
+                child: StatisticsCounter(value: e.value, title: e.title),
               ),
             ),
           )

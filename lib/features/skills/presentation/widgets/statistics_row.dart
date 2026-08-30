@@ -20,7 +20,7 @@ class StatisticsRow extends StatelessWidget {
       return Row(
         children: provider.statistics.map((stat) {
           return Expanded(
-            child: StatisticCounter(value: stat.value, title: stat.title),
+            child: StatisticsCounter(value: stat.value, title: stat.title),
           );
         }).toList(),
       );
@@ -34,7 +34,7 @@ class StatisticsRow extends StatelessWidget {
         children: provider.statistics.map((stat) {
           return SizedBox(
             width: 220,
-            child: StatisticCounter(value: stat.value, title: stat.title),
+            child: StatisticsCounter(value: stat.value, title: stat.title),
           );
         }).toList(),
       );
@@ -47,7 +47,7 @@ class StatisticsRow extends StatelessWidget {
       children: provider.statistics.map((stat) {
         return SizedBox(
           width: 150,
-          child: StatisticCounter(value: stat.value, title: stat.title),
+          child: StatisticsCounter(value: stat.value, title: stat.title),
         );
       }).toList(),
     );

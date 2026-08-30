@@ -29,7 +29,7 @@ class ContactSection extends StatelessWidget {
       child: Stack(
         children: [
           /// Background Decorations
-          const Positioned.fill(child: ContactBackground()),
+          const Positioned.fill(child: ContactsBackground()),
 
           /// Main Content
           ConstrainedBox(
@@ -39,12 +39,12 @@ class ContactSection extends StatelessWidget {
                     color: AppColors.background,
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
-                      children: const [
-                        Expanded(flex: 5, child: ContactLeftPanel()),
+                      children: [
+                        Expanded(flex: 5, child: ContactsLeftPanel()),
 
                         SizedBox(width: 70),
 
-                        Expanded(flex: 6, child: ContactForm()),
+                        Expanded(flex: 6, child: ContactsForm()),
                       ],
                     ),
                   )
@@ -54,11 +54,11 @@ class ContactSection extends StatelessWidget {
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: const [
-                        Expanded(child: ContactLeftPanel()),
+                        Expanded(child: ContactsLeftPanel()),
 
                         SizedBox(width: 40),
 
-                        Expanded(child: ContactForm()),
+                        Expanded(child: ContactsForm()),
                       ],
                     ),
                   )
@@ -66,11 +66,11 @@ class ContactSection extends StatelessWidget {
                     color: AppColors.background,
                     child: Column(
                       children: const [
-                        ContactLeftPanel(),
+                        ContactsLeftPanel(),
 
                         SizedBox(height: 50),
 
-                        ContactForm(),
+                        ContactsForm(),
                       ],
                     ),
                   ),

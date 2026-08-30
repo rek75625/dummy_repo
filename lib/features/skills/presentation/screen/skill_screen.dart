@@ -12,16 +12,12 @@ class SkillsSection extends StatelessWidget {
     return Container(
       color: AppColors.background,
 
-      padding: const EdgeInsets.symmetric(horizontal: 50),
+      padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 60),
 
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
 
         children: [
-          const StatisticsRow(),
-
-          const SizedBox(height: 100),
-
           Align(
             alignment: AlignmentGeometry.topStart,
             child: Text(
@@ -46,9 +42,34 @@ class SkillsSection extends StatelessWidget {
             ),
           ),
 
-          const SizedBox(height: 60),
+          SizedBox(height: 40),
+          SkillsGrid(),
+          SizedBox(height: 100),
+          Align(
+            alignment: AlignmentGeometry.topStart,
+            child: Text(
+              "MY STATISTICS",
+              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                color: AppColors.yellow,
+                letterSpacing: 3,
+              ),
+            ),
+          ),
 
-          const SkillsGrid(),
+          const SizedBox(height: 15),
+
+          Align(
+            alignment: AlignmentGeometry.topStart,
+            child: Text(
+              "Here is the Success rate:",
+              style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+          const SizedBox(height: 30),
+          const StatisticsRow(),
         ],
       ),
     );

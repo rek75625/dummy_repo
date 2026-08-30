@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:hassanzamin/core/constants/app_colors.dart';
 import 'package:hassanzamin/features/contact/presentation/model/feature_card.dart';
 
-class ContactLeftPanel extends StatelessWidget {
-  const ContactLeftPanel({super.key});
+class ContactsLeftPanel extends StatelessWidget {
+  const ContactsLeftPanel({super.key});
 
   @override
   Widget build(BuildContext context) {

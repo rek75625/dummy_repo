@@ -13,7 +13,7 @@ class PartnersSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 100),
+      padding: EdgeInsets.symmetric(vertical: 80),
       color: AppColors.background,
       child: Column(
         children: [
@@ -25,7 +25,7 @@ class PartnersSection extends StatelessWidget {
             ),
           ),
 
-          const SizedBox(height: 15),
+          const SizedBox(height: 10),
 
           Text(
             "Brands I've Worked With",
@@ -34,7 +34,7 @@ class PartnersSection extends StatelessWidget {
               fontWeight: FontWeight.bold,
             ),
           ),
-          const SizedBox(height: 15),
+          const SizedBox(height: 10),
           Text(
             "We proudly collaborate with innovative brands and growing businesses worldwide.",
             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
@@ -46,7 +46,7 @@ class PartnersSection extends StatelessWidget {
           SizedBox(height: 60),
 
           AutoScrollLogo(),
-          SizedBox(height: 40),
+          SizedBox(height: 60),
           FadeSlideAnimation(
             delay: Duration(milliseconds: 600),
             child: SizedBox(

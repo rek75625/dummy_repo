@@ -47,7 +47,7 @@ class SkillsGrid extends StatelessWidget {
                   onTap: () {
                     context.pushNamed("skillsDetails", extra: index);
                   },
-                  child: SkillCard(skill: provider.skills[index]),
+                  child: SkillCard(skill: provider.skills[index], index: index),
                 ),
               ),
             ),

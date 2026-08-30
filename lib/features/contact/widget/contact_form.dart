@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:hassanzamin/core/constants/app_colors.dart';
 
-class ContactForm extends StatefulWidget {
-  const ContactForm({super.key});
+class ContactsForm extends StatefulWidget {
+  const ContactsForm({super.key});
 
   @override
-  State<ContactForm> createState() => _ContactFormState();
+  State<ContactsForm> createState() => _ContactsFormState();
 }
 
-class _ContactFormState extends State<ContactForm> {
+class _ContactsFormState extends State<ContactsForm> {
   final nameController = TextEditingController();
   final emailController = TextEditingController();
   final phoneController = TextEditingController();

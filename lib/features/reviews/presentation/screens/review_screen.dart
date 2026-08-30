@@ -20,7 +20,7 @@ class ReviewsSection extends StatelessWidget {
             : width >= 768
             ? 0
             : 0,
-        vertical: width >= 768 ? 100 : 60,
+        vertical: width >= 768 ? 80 : 60,
       ),
 
       child: Column(
@@ -47,9 +47,10 @@ class ReviewsSection extends StatelessWidget {
 
           ReviewsSlider(),
 
-          SizedBox(height: 30),
+          SizedBox(height: 20),
 
           ReviewsIndicator(),
+          SizedBox(height: 30),
         ],
       ),
     );
