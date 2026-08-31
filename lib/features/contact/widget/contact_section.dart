@@ -19,11 +19,11 @@ class ContactSection extends StatelessWidget {
       width: double.infinity,
       padding: EdgeInsets.symmetric(
         horizontal: mobile
-            ? 20
+            ? 30
             : tablet
             ? 40
-            : 70,
-        vertical: mobile ? 60 : 90,
+            : 40,
+        vertical: mobile ? 60 : 70,
       ),
       decoration: BoxDecoration(color: AppColors.background),
       child: Stack(

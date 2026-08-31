@@ -1,6 +1,9 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:hassanzamin/core/animations/hover_animation.dart';
+import 'package:hassanzamin/features/footer/provider/footer_provider.dart';
+import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../core/constants/app_colors.dart';
 
@@ -183,7 +186,7 @@ class _DesktopFooterContent extends StatelessWidget {
           ),
         ),
 
-        const SizedBox(width: 25),
+        const SizedBox(width: 10),
 
         const Expanded(
           flex: 2,
@@ -193,7 +196,7 @@ class _DesktopFooterContent extends StatelessWidget {
           ),
         ),
 
-        const SizedBox(width: 25),
+        const SizedBox(width: 10),
 
         const Expanded(flex: 3, child: _ContactColumn()),
       ],
@@ -203,7 +206,7 @@ class _DesktopFooterContent extends StatelessWidget {
 
 /* ============================================================
                           TABLET
-============================================================ */
+============================================================*/
 
 class _TabletFooterContent extends StatelessWidget {
   const _TabletFooterContent();
@@ -319,7 +322,6 @@ class _BrandSection extends StatelessWidget {
       crossAxisAlignment: alignment,
       children: [
         _Logo(),
-
         const SizedBox(height: 25),
 
         ConstrainedBox(
@@ -380,20 +382,50 @@ class _SocialButtons extends StatelessWidget {
     return Wrap(
       spacing: 12,
       runSpacing: 12,
-      children: const [
+      children: [
         _SocialButton(
           icon: FontAwesomeIcons.facebookF,
           color: Color(0xFF1877F2),
+          index: 11,
+          onTap: () async {
+            openSocialMedia(
+              'https://web.facebook.com/hassandigitalmarketingservices',
+            );
+          },
         ),
 
         _SocialButton(
           icon: FontAwesomeIcons.instagram,
           color: Color(0xFFE4405F),
+          index: 22,
+          onTap: () async {
+            openSocialMedia(
+              'https://www.instagram.com/hassaandigitalmarketing',
+            );
+          },
         ),
 
-        _SocialButton(icon: FontAwesomeIcons.tiktok, color: Colors.white),
+        _SocialButton(
+          icon: FontAwesomeIcons.tiktok,
+          color: Colors.black,
+          index: 33,
+          onTap: () async {
+            openSocialMedia(
+              'https://www.tiktok.com/@hassandigitalteam?is_from_webapp=1&sender_device=pc',
+            );
+          },
+        ),
 
-        _SocialButton(icon: FontAwesomeIcons.youtube, color: Color(0xFFFF0000)),
+        _SocialButton(
+          icon: FontAwesomeIcons.youtube,
+          color: Color(0xFFFF0000),
+          index: 44,
+          onTap: () async {
+            openSocialMedia(
+              'https://www.youtube.com/@Digitalmarektingservices',
+            );
+          },
+        ),
       ],
     );
   }
@@ -403,44 +435,38 @@ class _SocialButtons extends StatelessWidget {
 /// SOCIAL BUTTON
 /// ============================================================
 
-class _SocialButton extends StatefulWidget {
+class _SocialButton extends StatelessWidget {
   final FaIconData icon;
   final Color color;
+  final int index;
+  final VoidCallback onTap;
 
-  const _SocialButton({required this.icon, required this.color});
-
-  @override
-  State<_SocialButton> createState() => _SocialButtonState();
-}
-
-class _SocialButtonState extends State<_SocialButton> {
-  bool _hovered = false;
+  const _SocialButton({
+    required this.icon,
+    required this.color,
+    required this.index,
+    required this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
+    final isHovered = context.select<MouseRegionProvider, bool>(
+      (provider) => provider.isHovered(index),
+    );
+
     return MouseRegion(
       cursor: SystemMouseCursors.click,
 
       onEnter: (_) {
-        if (!kIsWeb) return;
-
-        setState(() {
-          _hovered = true;
-        });
+        context.read<MouseRegionProvider>().setHover(index);
       },
 
       onExit: (_) {
-        if (!kIsWeb) return;
-
-        setState(() {
-          _hovered = false;
-        });
+        context.read<MouseRegionProvider>().clearHover(index);
       },
 
       child: GestureDetector(
-        onTap: () {
-          // Add your social-media URL/action here.
-        },
+        onTap: onTap,
 
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 250),
@@ -449,26 +475,26 @@ class _SocialButtonState extends State<_SocialButton> {
           width: 46,
           height: 46,
 
-          transform: Matrix4.translationValues(0, _hovered ? -5 : 0, 0),
+          transform: Matrix4.translationValues(0, isHovered ? -5 : 0, 0),
 
           decoration: BoxDecoration(
             shape: BoxShape.circle,
 
-            color: _hovered
-                ? widget.color.withValues(alpha: 0.14)
+            color: isHovered
+                ? color.withValues(alpha: 0.14)
                 : Colors.white.withValues(alpha: 0.07),
 
             border: Border.all(
               width: 1,
-              color: _hovered
-                  ? widget.color.withValues(alpha: 0.45)
+              color: isHovered
+                  ? color.withValues(alpha: 0.45)
                   : Colors.white.withValues(alpha: 0.08),
             ),
 
-            boxShadow: _hovered
+            boxShadow: isHovered
                 ? [
                     BoxShadow(
-                      color: widget.color.withValues(alpha: 0.20),
+                      color: color.withValues(alpha: 0.20),
                       blurRadius: 20,
                       spreadRadius: 1,
                     ),
@@ -481,9 +507,7 @@ class _SocialButtonState extends State<_SocialButton> {
                   ],
           ),
 
-          child: Center(
-            child: FaIcon(widget.icon, size: 18, color: widget.color),
-          ),
+          child: Center(child: FaIcon(icon, size: 18, color: color)),
         ),
       ),
     );
@@ -502,6 +526,8 @@ class _FooterLinksColumn extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final int startIndex = title == 'Services' ? 0 : 100;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
@@ -518,7 +544,12 @@ class _FooterLinksColumn extends StatelessWidget {
 
         const SizedBox(height: 22),
 
-        ...items.map((item) => _FooterLink(title: item)),
+        for (int index = 0; index < items.length; index++)
+          _FooterLink(
+            item: items[index],
+            index: startIndex + index,
+            title: title,
+          ),
       ],
     );
   }
@@ -528,37 +559,32 @@ class _FooterLinksColumn extends StatelessWidget {
 /// FOOTER LINK
 /// ============================================================
 
-class _FooterLink extends StatefulWidget {
+class _FooterLink extends StatelessWidget {
+  final String item;
+  final int index;
   final String title;
 
-  const _FooterLink({required this.title});
-
-  @override
-  State<_FooterLink> createState() => _FooterLinkState();
-}
-
-class _FooterLinkState extends State<_FooterLink> {
-  bool _hovered = false;
+  const _FooterLink({
+    required this.item,
+    required this.index,
+    required this.title,
+  });
 
   @override
   Widget build(BuildContext context) {
+    final isHovered = context.select<MouseRegionProvider, bool>(
+      (provider) => provider.isHovered(index),
+    );
+
     return MouseRegion(
       cursor: SystemMouseCursors.click,
 
       onEnter: (_) {
-        if (!kIsWeb) return;
-
-        setState(() {
-          _hovered = true;
-        });
+        context.read<MouseRegionProvider>().setHover(index);
       },
 
       onExit: (_) {
-        if (!kIsWeb) return;
-
-        setState(() {
-          _hovered = false;
-        });
+        context.read<MouseRegionProvider>().clearHover(index);
       },
 
       child: GestureDetector(
@@ -572,7 +598,7 @@ class _FooterLinkState extends State<_FooterLink> {
             duration: const Duration(milliseconds: 200),
             curve: Curves.easeOut,
 
-            transform: Matrix4.translationValues(_hovered ? 4 : 0, 0, 0),
+            transform: Matrix4.translationValues(isHovered ? 4 : 0, 0, 0),
 
             child: Row(
               mainAxisSize: MainAxisSize.min,
@@ -580,10 +606,10 @@ class _FooterLinkState extends State<_FooterLink> {
                 AnimatedContainer(
                   duration: const Duration(milliseconds: 200),
 
-                  width: _hovered ? 8 : 0,
+                  width: isHovered ? 8 : 0,
                   height: 2,
 
-                  margin: EdgeInsets.only(right: _hovered ? 8 : 0),
+                  margin: EdgeInsets.only(right: isHovered ? 8 : 0),
 
                   decoration: BoxDecoration(
                     color: const Color(0xFFFFC107),
@@ -592,9 +618,9 @@ class _FooterLinkState extends State<_FooterLink> {
                 ),
 
                 Text(
-                  widget.title,
+                  item,
                   style: TextStyle(
-                    color: _hovered ? const Color(0xFFFFC107) : Colors.white70,
+                    color: isHovered ? const Color(0xFFFFC107) : Colors.white70,
                     fontSize: 16,
                     fontWeight: FontWeight.w600,
                     letterSpacing: 0.5,
@@ -616,12 +642,42 @@ class _FooterLinkState extends State<_FooterLink> {
 class _ContactColumn extends StatelessWidget {
   const _ContactColumn();
 
+  Future<void> _openLocation() async {
+    final Uri location = Uri.parse(
+      'https://www.google.com/maps/search/?api=1&query=I-8+Islamabad+Pakistan',
+    );
+
+    if (await canLaunchUrl(location)) {
+      await launchUrl(location, mode: LaunchMode.externalApplication);
+    }
+  }
+
+  Future<void> _callPhone() async {
+    final Uri phone = Uri(scheme: 'tel', path: '+923453884988');
+
+    if (await canLaunchUrl(phone)) {
+      await launchUrl(phone);
+    }
+  }
+
+  Future<void> _sendEmail() async {
+    final Uri email = Uri(
+      scheme: 'mailto',
+      path: 'hassaanzamin@gmail.com',
+      queryParameters: {'subject': 'Contact from Website'},
+    );
+
+    if (await canLaunchUrl(email)) {
+      await launchUrl(email);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: const [
-        Text(
+      children: [
+        const Text(
           'Contact',
           style: TextStyle(
             color: Color(0xFFF8F8FF),
@@ -630,22 +686,31 @@ class _ContactColumn extends StatelessWidget {
           ),
         ),
 
-        SizedBox(height: 22),
+        const SizedBox(height: 22),
 
+        // LOCATION
         _ContactItem(
           icon: Icons.location_on_outlined,
-          text: 'Islamabad Capital Territory, Pakistan',
+          text: 'I-8 Islamabad, Pakistan',
+          onTap: _openLocation,
         ),
 
-        SizedBox(height: 17),
+        const SizedBox(height: 17),
 
-        _ContactItem(icon: Icons.phone_outlined, text: '+92 345 3884988'),
+        // PHONE
+        _ContactItem(
+          icon: Icons.phone_outlined,
+          text: '+92 345 3884988',
+          onTap: _callPhone,
+        ),
 
-        SizedBox(height: 17),
+        const SizedBox(height: 17),
 
+        // EMAIL
         _ContactItem(
           icon: Icons.email_outlined,
           text: 'hassaanzamin@gmail.com',
+          onTap: _sendEmail,
         ),
       ],
     );
@@ -659,39 +724,37 @@ class _ContactColumn extends StatelessWidget {
 class _ContactItem extends StatelessWidget {
   final IconData icon;
   final String text;
+  final VoidCallback onTap;
 
-  const _ContactItem({required this.icon, required this.text});
+  const _ContactItem({
+    required this.icon,
+    required this.text,
+    required this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Container(
-          width: 34,
-          height: 34,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color: const Color(0xFFFFC107).withValues(alpha: .1),
-          ),
-          child: Icon(icon, color: const Color(0xFFFFC107), size: 17),
-        ),
-
-        const SizedBox(width: 12),
-
-        Expanded(
-          child: Text(
-            text,
-            style: const TextStyle(
-              color: Color(0xFFE3E1F0),
-              fontSize: 14,
-              height: 1.6,
-              fontWeight: FontWeight.w600,
-              letterSpacing: .7,
-            ),
+    return Container(
+      alignment: Alignment.topLeft,
+      width: double.infinity,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        color: const Color(0xFFFFC107).withValues(alpha: .1),
+      ),
+      child: TextButton.icon(
+        icon: Icon(icon, color: const Color(0xFFFFC107), size: 17),
+        label: Text(
+          text,
+          style: const TextStyle(
+            color: Color(0xFFE3E1F0),
+            fontSize: 14,
+            height: 1.6,
+            fontWeight: FontWeight.w600,
+            letterSpacing: .7,
           ),
         ),
-      ],
+        onPressed: onTap,
+      ),
     );
   }
 }

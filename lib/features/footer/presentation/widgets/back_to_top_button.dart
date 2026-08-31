@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-class BackToTopButton extends StatelessWidget {
+class ReverseTopButton extends StatelessWidget {
   final ScrollController controller;
 
-  const BackToTopButton({super.key, required this.controller});
+  const ReverseTopButton({super.key, required this.controller});
 
   @override
   Widget build(BuildContext context) {

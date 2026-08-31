@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hassanzamin/core/constants/app_colors.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ContactsForm extends StatefulWidget {
   const ContactsForm({super.key});
@@ -88,6 +89,24 @@ class _ContactsFormState extends State<ContactsForm> {
                 hint: "Your Message",
                 maxLines: 10,
               ),
+              const SizedBox(height: 40),
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton.icon(
+                  iconAlignment: IconAlignment.end,
+                  onPressed: () async {
+                    await sendFormToWhatsApp(
+                      nameController: nameController,
+                      emailController: emailController,
+                      phoneController: phoneController,
+                      subjectController: subjectController,
+                      messageController: messageController,
+                    );
+                  },
+                  label: Text("Send"),
+                  icon: Icon(Icons.send),
+                ),
+              ),
             ],
           ),
         ),
@@ -125,5 +144,42 @@ class _ContactsFormState extends State<ContactsForm> {
         ),
       ),
     );
+  }
+}
+
+Future<void> sendFormToWhatsApp({
+  required TextEditingController nameController,
+  required TextEditingController emailController,
+  required TextEditingController phoneController,
+  required TextEditingController subjectController,
+  required TextEditingController messageController,
+}) async {
+  const String businessPhoneNumber = '923453884988';
+
+  final String formattedText =
+      '''
+New Lead From App:
+
+Name: ${nameController.text.trim()}
+Email: ${emailController.text.trim()}
+Phone No: ${phoneController.text.trim()}
+Subject: ${subjectController.text.trim()}
+
+Message:
+${messageController.text.trim()}
+''';
+
+  final Uri whatsappUrl = Uri.https('wa.me', '/$businessPhoneNumber', {
+    'text': formattedText,
+  });
+
+  try {
+    if (await canLaunchUrl(whatsappUrl)) {
+      await launchUrl(whatsappUrl, mode: LaunchMode.externalApplication);
+    } else {
+      debugPrint('Could not launch WhatsApp.');
+    }
+  } catch (e) {
+    debugPrint('WhatsApp launch error: $e');
   }
 }

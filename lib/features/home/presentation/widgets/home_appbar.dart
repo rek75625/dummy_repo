@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hassanzamin/features/contact/presentation/contact_details_screen.dart';
 import 'package:hassanzamin/features/home/provider/home_provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 Widget appBar(BuildContext context, HomeProvider provider) {
   final width = MediaQuery.of(context).size.width;
@@ -333,7 +334,26 @@ Widget _drawerItem(
 
 Widget whatsappButton(HomeProvider provider) {
   return InkWell(
-    onTap: () {},
+    onTap: () async {
+      const String businessPhoneNumber = '923453884988';
+
+      const String message =
+          'Hello Hassan Zamin, I would like to discuss a project or something with you.';
+
+      final Uri whatsappUrl = Uri.https('wa.me', '/$businessPhoneNumber', {
+        'text': message,
+      });
+
+      try {
+        if (await canLaunchUrl(whatsappUrl)) {
+          await launchUrl(whatsappUrl, mode: LaunchMode.externalApplication);
+        } else {
+          debugPrint('Could not open WhatsApp.');
+        }
+      } catch (e) {
+        debugPrint('WhatsApp error: $e');
+      }
+    },
     borderRadius: BorderRadius.circular(50),
     child: Container(
       padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 10),

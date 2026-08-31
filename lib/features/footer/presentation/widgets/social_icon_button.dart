@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-class SocialIconButton extends StatefulWidget {
+class SocialIconButton extends StatelessWidget {
   final Widget icon;
   final VoidCallback onTap;
   final Color color;
@@ -13,31 +14,26 @@ class SocialIconButton extends StatefulWidget {
   });
 
   @override
-  State<SocialIconButton> createState() => _SocialIconButtonState();
-}
-
-class _SocialIconButtonState extends State<SocialIconButton> {
-  bool hover = false;
-
-  @override
   Widget build(BuildContext context) {
+    final provider = context.watch<SocialIconButtonProvider>();
+
     return MouseRegion(
-      onEnter: (_) => setState(() => hover = true),
-      onExit: (_) => setState(() => hover = false),
+      onEnter: (_) => provider.setHover(true),
+      onExit: (_) => provider.setHover(false),
       cursor: SystemMouseCursors.click,
       child: GestureDetector(
-        onTap: widget.onTap,
+        onTap: onTap,
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 250),
           curve: Curves.easeInOut,
           width: 45,
           height: 45,
           decoration: BoxDecoration(
-            color: hover
+            color: provider.hover
                 ? Colors.amber.shade600
                 : Colors.white.withValues(alpha: 0.10),
             shape: BoxShape.circle,
-            boxShadow: hover
+            boxShadow: provider.hover
                 ? [
                     BoxShadow(
                       color: Colors.yellow.withValues(alpha: 0.35),
@@ -50,14 +46,27 @@ class _SocialIconButtonState extends State<SocialIconButton> {
           child: Center(
             child: IconTheme(
               data: IconThemeData(
-                color: hover ? widget.color : widget.color,
+                color: provider.hover ? color : color,
                 size: 20,
               ),
-              child: widget.icon,
+              child: icon,
             ),
           ),
         ),
       ),
     );
+  }
+}
+
+class SocialIconButtonProvider extends ChangeNotifier {
+  bool _hover = false;
+
+  bool get hover => _hover;
+
+  void setHover(bool value) {
+    if (_hover == value) return;
+
+    _hover = value;
+    notifyListeners();
   }
 }

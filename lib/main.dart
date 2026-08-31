@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:hassanzamin/core/animations/hover_animation.dart';
 import 'package:hassanzamin/core/widgets/animated_gradient.dart';
 import 'package:hassanzamin/features/about/provider/about_provider.dart';
+import 'package:hassanzamin/features/contact/provider/contact_textfield_provider.dart';
+import 'package:hassanzamin/features/footer/presentation/widgets/social_icon_button.dart';
 import 'package:hassanzamin/features/footer/provider/footer_provider.dart';
 import 'package:hassanzamin/features/home/provider/floating_action_provider.dart';
 import 'package:hassanzamin/features/home/provider/home_provider.dart';
@@ -44,6 +46,9 @@ Future<void> main() async {
         ChangeNotifierProvider(create: (_) => DetailScreenCardProvider()),
         ChangeNotifierProvider(create: (_) => ServiceCardHoverProvider()),
         ChangeNotifierProvider(create: (_) => MouseRegionForPartnerProvider()),
+        ChangeNotifierProvider(create: (_) => TextFieldsProvider()),
+        ChangeNotifierProvider(create: (_) => SocialIconButtonProvider()),
+        ChangeNotifierProvider(create: (_) => SocialButtonProvider()),
       ],
       child: const PortfolioApp(),
     ),

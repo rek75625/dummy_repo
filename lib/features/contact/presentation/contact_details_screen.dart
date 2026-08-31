@@ -4,6 +4,7 @@ import 'package:hassanzamin/features/contact/widget/contact_section.dart';
 import 'package:hassanzamin/features/footer/presentation/screens/footer_section.dart';
 import 'package:hassanzamin/features/footer/presentation/screens/newsletter_section.dart';
 import 'package:hassanzamin/routes/back_to_home.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ContactDetailScreen extends StatelessWidget {
   const ContactDetailScreen({super.key});
@@ -101,39 +102,100 @@ class ContactDetailScreen extends StatelessWidget {
                 );
               },
             ),
-            SizedBox(height: 50),
+
             ContactSection(),
             mobile
                 ? Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 16),
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        _info(Icons.phone, "+92 345 3884988"),
+                        _info(Icons.phone, "+92 345 3884988", () async {
+                          final Uri phone = Uri(
+                            scheme: 'tel',
+                            path: '+923453884988',
+                          );
+
+                          if (await canLaunchUrl(phone)) {
+                            await launchUrl(phone);
+                          }
+                        }),
+
                         const SizedBox(height: 20),
 
-                        _info(Icons.email, "hassaanzamin@gmail.com"),
+                        _info(Icons.email, "hassaanzamin@gmail.com", () async {
+                          final Uri email = Uri(
+                            scheme: 'mailto',
+                            path: 'hassaanzamin@gmail.com',
+                          );
+
+                          if (await canLaunchUrl(email)) {
+                            await launchUrl(email);
+                          }
+                        }),
+
                         const SizedBox(height: 20),
 
                         _info(
                           Icons.location_on,
-                          "Islamabad Capital Territory, Pakistan",
+                          "I-8 Islamabad, Pakistan",
+                          () async {
+                            final Uri location = Uri.https(
+                              'www.google.com',
+                              '/maps/search/',
+                              {'api': '1', 'query': 'I-8 Islamabad Pakistan'},
+                            );
+
+                            if (await canLaunchUrl(location)) {
+                              await launchUrl(
+                                location,
+                                mode: LaunchMode.externalApplication,
+                              );
+                            }
+                          },
                         ),
                       ],
                     ),
                   )
                 : Padding(
-                    padding: EdgeInsets.only(left: 80),
+                    padding: const EdgeInsets.only(left: 80),
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Expanded(child: _info(Icons.phone, "+92 345 3884988")),
+                        Expanded(
+                          child: _info(
+                            Icons.phone,
+                            "+92 345 3884988",
+                            () async {
+                              final Uri phone = Uri(
+                                scheme: 'tel',
+                                path: '+923453884988',
+                              );
 
-                        const SizedBox(width: 10),
+                              if (await canLaunchUrl(phone)) {
+                                await launchUrl(phone);
+                              }
+                            },
+                          ),
+                        ),
+
+                        const SizedBox(width: 15),
 
                         Expanded(
-                          child: _info(Icons.email, "hassaanzamin@gmail.com"),
+                          child: _info(
+                            Icons.email,
+                            "hassaanzamin@gmail.com",
+                            () async {
+                              final Uri email = Uri(
+                                scheme: 'mailto',
+                                path: 'hassaanzamin@gmail.com',
+                              );
+
+                              if (await canLaunchUrl(email)) {
+                                await launchUrl(email);
+                              }
+                            },
+                          ),
                         ),
 
                         const SizedBox(width: 15),
@@ -141,7 +203,21 @@ class ContactDetailScreen extends StatelessWidget {
                         Expanded(
                           child: _info(
                             Icons.location_on,
-                            "Islamabad Capital Territory, Pakistan",
+                            "I-8 Islamabad, Pakistan",
+                            () async {
+                              final Uri location = Uri.https(
+                                'www.google.com',
+                                '/maps/search/',
+                                {'api': '1', 'query': 'I-8 Islamabad Pakistan'},
+                              );
+
+                              if (await canLaunchUrl(location)) {
+                                await launchUrl(
+                                  location,
+                                  mode: LaunchMode.externalApplication,
+                                );
+                              }
+                            },
                           ),
                         ),
                       ],
@@ -157,32 +233,28 @@ class ContactDetailScreen extends StatelessWidget {
     );
   }
 
-  Widget _info(IconData icon, String value) {
-    return Row(
-      children: [
-        Container(
-          width: 50,
-          height: 50,
-          decoration: BoxDecoration(
-            color: const Color(0xffFFD83D),
-            borderRadius: BorderRadius.circular(14),
-          ),
-          child: Icon(icon, color: const Color(0xff26224F)),
-        ),
-
-        const SizedBox(width: 18),
-
-        Expanded(
-          child: Text(
-            value,
-            style: const TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w600,
-              color: Colors.white,
-            ),
+  Widget _info(IconData icon, String value, VoidCallback onTap) {
+    return Container(
+      alignment: Alignment.topLeft,
+      width: double.infinity,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        color: const Color(0xFFFFC107).withValues(alpha: .1),
+      ),
+      child: TextButton.icon(
+        icon: Icon(icon, color: const Color(0xFFFFC107), size: 25),
+        label: Text(
+          value,
+          style: const TextStyle(
+            color: Color(0xFFE3E1F0),
+            fontSize: 16,
+            height: 1.6,
+            fontWeight: FontWeight.w600,
+            letterSpacing: .7,
           ),
         ),
-      ],
+        onPressed: onTap,
+      ),
     );
   }
 }
