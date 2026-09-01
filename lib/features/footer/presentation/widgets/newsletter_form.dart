@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import '../../../../core/constants/app_colors.dart';
 import '../../provider/footer_provider.dart';
 
@@ -301,7 +300,7 @@ class NewsletterForm extends StatelessWidget {
                 decoration: InputDecoration(
                   hintText: "Enter your email",
                   filled: true,
-                  fillColor: AppColors.grey,
+                  fillColor: AppColors.background,
                   contentPadding: const EdgeInsets.symmetric(
                     horizontal: 20,
                     vertical: 18,

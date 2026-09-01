@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:hassanzamin/features/skills/provider/skill_provider.dart';
 import 'package:hassanzamin/repositories/responsive.dart';
-import 'package:provider/provider.dart';
+import 'package:visibility_detector/visibility_detector.dart';
 
 class StatisticsCounter extends StatefulWidget {
   final int value;
@@ -20,7 +19,9 @@ class StatisticsCounter extends StatefulWidget {
 class _StatisticsCounterState extends State<StatisticsCounter>
     with SingleTickerProviderStateMixin {
   late final AnimationController _controller;
-  late final Animation<int> _animation;
+  late Animation<int> _animation;
+
+  bool _hasStarted = false;
 
   @override
   void initState() {
@@ -34,7 +35,13 @@ class _StatisticsCounterState extends State<StatisticsCounter>
     _animation = IntTween(
       begin: 0,
       end: widget.value,
-    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeOut));
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeOutCubic));
+  }
+
+  void _startCounter() {
+    if (_hasStarted) return;
+
+    _hasStarted = true;
 
     _controller.forward();
   }
@@ -60,46 +67,59 @@ class _StatisticsCounterState extends State<StatisticsCounter>
         ? 20
         : tablet
         ? 16
-        : 2;
+        : 18;
 
-    return AnimatedBuilder(
-      animation: _animation,
-      builder: (_, _) {
-        return Container(
-          margin: EdgeInsets.all(8),
-          width: double.infinity,
-          padding: EdgeInsets.all(padding),
-          decoration: BoxDecoration(
-            border: Border.all(color: Colors.white.withValues(alpha: .25)),
-            borderRadius: BorderRadius.circular(18),
-            color: Colors.white.withValues(alpha: .03),
-          ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                "${_animation.value}+",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: numberSize,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
+    return VisibilityDetector(
+      key: Key('statistics-${widget.title}'),
 
-              Text(
-                widget.title,
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Colors.white70,
-                  fontSize: titleSize,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-            ],
-          ),
-        );
+      onVisibilityChanged: (info) {
+        // Start when at least 25% of the card becomes visible.
+        if (info.visibleFraction >= 0.25) {
+          _startCounter();
+        }
       },
+
+      child: AnimatedBuilder(
+        animation: _animation,
+        builder: (context, child) {
+          return Container(
+            margin: const EdgeInsets.all(8),
+            width: double.infinity,
+            padding: EdgeInsets.all(padding),
+            decoration: BoxDecoration(
+              border: Border.all(color: Colors.white.withValues(alpha: 0.25)),
+              borderRadius: BorderRadius.circular(18),
+              color: Colors.white.withValues(alpha: 0.03),
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  '${_animation.value}+',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: numberSize,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+
+                const SizedBox(height: 4),
+
+                Text(
+                  widget.title,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Colors.white70,
+                    fontSize: titleSize,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ],
+            ),
+          );
+        },
+      ),
     );
   }
 
@@ -107,59 +127,5 @@ class _StatisticsCounterState extends State<StatisticsCounter>
   void dispose() {
     _controller.dispose();
     super.dispose();
-  }
-}
-
-class StatisticsRow extends StatelessWidget {
-  const StatisticsRow({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    final provider = Provider.of<SkillProvider>(context, listen: false);
-
-    if (Responsive.isMobile(context)) {
-      return Column(
-        children: provider.statistics
-            .map(
-              (e) => Padding(
-                padding: const EdgeInsets.only(bottom: 16),
-                child: StatisticsCounter(value: e.value, title: e.title),
-              ),
-            )
-            .toList(),
-      );
-    }
-
-    if (Responsive.isTablet(context)) {
-      return GridView.builder(
-        shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
-        itemCount: provider.statistics.length,
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          crossAxisSpacing: 18,
-          mainAxisSpacing: 18,
-          childAspectRatio: 1.6,
-        ),
-        itemBuilder: (_, index) {
-          final stat = provider.statistics[index];
-
-          return StatisticsCounter(value: stat.value, title: stat.title);
-        },
-      );
-    }
-
-    return Row(
-      children: provider.statistics
-          .map(
-            (e) => Expanded(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                child: StatisticsCounter(value: e.value, title: e.title),
-              ),
-            ),
-          )
-          .toList(),
-    );
   }
 }

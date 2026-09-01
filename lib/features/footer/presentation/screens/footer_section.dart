@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hassanzamin/core/animations/hover_animation.dart';
@@ -661,14 +662,46 @@ class _ContactColumn extends StatelessWidget {
   }
 
   Future<void> _sendEmail() async {
-    final Uri email = Uri(
+    const String emailAddress = 'info@hassanzamin.com';
+    const String subject = 'Contact from Website';
+
+    // ----------------------------------------------------------
+    // FLUTTER WEB
+    // ----------------------------------------------------------
+    if (kIsWeb) {
+      final Uri gmailUrl = Uri.https('mail.google.com', '/mail/', {
+        'view': 'cm',
+        'fs': '1',
+        'to': emailAddress,
+        'su': subject,
+      });
+
+      try {
+        await launchUrl(gmailUrl, mode: LaunchMode.externalApplication);
+      } catch (e) {
+        debugPrint('Could not open Gmail: $e');
+      }
+
+      return;
+    }
+
+    // ----------------------------------------------------------
+    // MOBILE / DESKTOP APP
+    // ----------------------------------------------------------
+    final Uri emailUrl = Uri(
       scheme: 'mailto',
-      path: 'hassaanzamin@gmail.com',
-      queryParameters: {'subject': 'Contact from Website'},
+      path: emailAddress,
+      queryParameters: {'subject': subject},
     );
 
-    if (await canLaunchUrl(email)) {
-      await launchUrl(email);
+    try {
+      if (await canLaunchUrl(emailUrl)) {
+        await launchUrl(emailUrl, mode: LaunchMode.externalApplication);
+      } else {
+        debugPrint('No email application is available.');
+      }
+    } catch (e) {
+      debugPrint('Email launch error: $e');
     }
   }
 
@@ -709,7 +742,7 @@ class _ContactColumn extends StatelessWidget {
         // EMAIL
         _ContactItem(
           icon: Icons.email_outlined,
-          text: 'hassaanzamin@gmail.com',
+          text: 'info@hassanzamin.com',
           onTap: _sendEmail,
         ),
       ],

@@ -3,6 +3,7 @@ import 'package:hassanzamin/core/widgets/custom_appbar.dart';
 import 'package:hassanzamin/features/contact/widget/contact_section.dart';
 import 'package:hassanzamin/features/footer/presentation/screens/footer_section.dart';
 import 'package:hassanzamin/features/footer/presentation/screens/newsletter_section.dart';
+import 'package:hassanzamin/features/footer/provider/footer_provider.dart';
 import 'package:hassanzamin/routes/back_to_home.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -126,7 +127,7 @@ class ContactDetailScreen extends StatelessWidget {
                         _info(Icons.email, "hassaanzamin@gmail.com", () async {
                           final Uri email = Uri(
                             scheme: 'mailto',
-                            path: 'hassaanzamin@gmail.com',
+                            path: 'info@hassanzamin.com',
                           );
 
                           if (await canLaunchUrl(email)) {
@@ -185,16 +186,7 @@ class ContactDetailScreen extends StatelessWidget {
                           child: _info(
                             Icons.email,
                             "hassaanzamin@gmail.com",
-                            () async {
-                              final Uri email = Uri(
-                                scheme: 'mailto',
-                                path: 'hassaanzamin@gmail.com',
-                              );
-
-                              if (await canLaunchUrl(email)) {
-                                await launchUrl(email);
-                              }
-                            },
+                            () => sendEmail(),
                           ),
                         ),
 

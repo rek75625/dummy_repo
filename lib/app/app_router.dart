@@ -11,6 +11,7 @@ import 'package:hassanzamin/features/partners/presentation/screens/partner_detai
 
 import 'package:hassanzamin/features/portfolio/model/portfolio_model.dart';
 import 'package:hassanzamin/features/portfolio/presentation/screens/portfolio_details_screen.dart';
+import 'package:hassanzamin/features/services/presentation/screens/our_services.dart';
 
 import 'package:hassanzamin/features/services/presentation/screens/services_screen.dart';
 import 'package:hassanzamin/features/services/presentation/screens/services_details_screen.dart';
@@ -132,7 +133,16 @@ final GoRouter appRouter = GoRouter(
         return ServicesDetailScreen(initialIndex: extra);
       },
     ),
-
+    // ========================================================
+    // OUR SERVICES
+    // ========================================================
+    GoRoute(
+      path: '/our-services',
+      name: 'ourServices',
+      builder: (context, state) {
+        return const OurServicesScreen();
+      },
+    ),
     // ========================================================
     // SKILLS DETAILS
     // ========================================================

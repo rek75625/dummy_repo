@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hassanzamin/core/animations/hover_animation.dart';
 import 'package:hassanzamin/features/partners/models/partner_model.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class CompanysCard extends StatelessWidget {
   final int index;
@@ -36,7 +37,7 @@ class CompanysCard extends StatelessWidget {
           },
 
           child: GestureDetector(
-            onTap: () => _showCompanyDetails(context),
+            onTap: () => _showCompanyDetails(context, company),
 
             child: AnimatedScale(
               scale: isHovered ? 1.025 : 1.0,
@@ -310,7 +311,7 @@ class CompanysCard extends StatelessWidget {
           child: InkWell(
             borderRadius: BorderRadius.circular(13),
 
-            onTap: () => _showCompanyDetails(context),
+            onTap: () => _showCompanyDetails(context, company),
 
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -354,7 +355,7 @@ class CompanysCard extends StatelessWidget {
   // COMPANY DETAILS
   // ============================================================
 
-  void _showCompanyDetails(BuildContext context) {
+  void _showCompanyDetails(BuildContext context, CompanysModel company) {
     showDialog(
       context: context,
 
@@ -500,8 +501,23 @@ class CompanysCard extends StatelessWidget {
                       height: 50,
 
                       child: ElevatedButton.icon(
-                        onPressed: () {
-                          // Add url_launcher here.
+                        onPressed: () async {
+                          final Uri websiteUrl = Uri.parse(company.website);
+
+                          try {
+                            if (await canLaunchUrl(websiteUrl)) {
+                              await launchUrl(
+                                websiteUrl,
+                                mode: LaunchMode.externalApplication,
+                              );
+                            } else {
+                              debugPrint(
+                                'Could not launch website: ${company.website}',
+                              );
+                            }
+                          } catch (e) {
+                            debugPrint('Website launch error: $e');
+                          }
                         },
 
                         icon: const Icon(Icons.language_rounded, size: 19),

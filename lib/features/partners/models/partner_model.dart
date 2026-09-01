@@ -43,7 +43,7 @@ class CompanyData {
       description:
           "Wall's is a well-known frozen dessert and ice cream brand "
           "marketed in Pakistan by Unilever Pakistan.",
-      website: "https://www.unilever.pk/",
+      website: "https://www.wallsicecream.com/uk/home.html",
     ),
 
     CompanysModel(
@@ -74,6 +74,69 @@ class CompanyData {
           "GSK Pakistan is part of the global GSK biopharma organization, "
           "providing medicines and vaccines.",
       website: "https://pk.gsk.com/en-pk/",
+    ),
+
+    // ---------------------------------------------------------
+    // DERA
+    // ---------------------------------------------------------
+    CompanysModel(
+      name: "DERA",
+      logo: "assets/companies/dera.jpg",
+      category: "Lifestyle",
+      description:
+          "DERA is a brand providing products and services for its customers.",
+      website: "https://web.facebook.com/deradaariisb/?_rdc=1&_rdr#",
+    ),
+
+    // ---------------------------------------------------------
+    // ESCOBAR
+    // ---------------------------------------------------------
+    CompanysModel(
+      name: "Escobar",
+      logo: "assets/companies/escobar.jpg",
+      category: "Lifestyle",
+      description:
+          "Escobar is a brand offering products and services to its customers.",
+      website: "https://escobarsalonspa.com/",
+    ),
+
+    // ---------------------------------------------------------
+    // IEHSAS
+    // ---------------------------------------------------------
+    CompanysModel(
+      name: "IEHSAS",
+      logo: "assets/companies/iehsas.png",
+      category: "Health, Safety & Environment",
+      description:
+          "IEHSAS is a Pakistan-based health, safety and environment "
+          "organization providing HSE training, consultancy, assessment, "
+          "inspection and certification services.",
+      website: "https://www.iehsas.com/",
+    ),
+
+    // ---------------------------------------------------------
+    // VIDA
+    // ---------------------------------------------------------
+    CompanysModel(
+      name: "Vida",
+      logo: "assets/companies/vida.jpg",
+      category: "Lifestyle",
+      description:
+          "Vida is a brand providing products and services for its customers.",
+      website: "https://vidanewyork.com/",
+    ),
+
+    // ---------------------------------------------------------
+    // PHARMA
+    // ---------------------------------------------------------
+    CompanysModel(
+      name: "Pharma",
+      logo: "assets/companies/pharma.png",
+      category: "Healthcare & Pharmaceuticals",
+      description:
+          "A pharmaceutical organization providing healthcare and "
+          "medical products and solutions.",
+      website: "https://web.facebook.com/PharmaAsiaEC/?_rdc=1&_rdr#",
     ),
   ];
 }
