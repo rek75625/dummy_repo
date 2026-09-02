@@ -40,7 +40,7 @@ class HeroSections extends StatelessWidget {
                     : 20,
               ),
               child: SizedBox(
-                height: Responsive.isDesktop(context) ? 850 : null,
+                height: Responsive.isDesktop(context) ? 800 : null,
                 child: Responsive.isDesktop(context)
                     ? _desktopLayout(context)
                     : Responsive.isTablet(context)
@@ -74,7 +74,7 @@ class HeroSections extends StatelessWidget {
           ),
         ),
 
-        const SizedBox(width: 80),
+        const SizedBox(width: 60),
 
         Expanded(
           flex: 4,
@@ -103,7 +103,7 @@ class HeroSections extends StatelessWidget {
 
           const SizedBox(height: 50),
 
-          _heroImage(width: 420, height: 550),
+          _heroImage(width: 750, height: 700),
 
           const SizedBox(height: 50),
         ],
@@ -119,7 +119,7 @@ class HeroSections extends StatelessWidget {
     return SingleChildScrollView(
       child: Column(
         children: [
-          const SizedBox(height: 80),
+          const SizedBox(height: 40),
 
           _textSection(
             context,
@@ -130,7 +130,7 @@ class HeroSections extends StatelessWidget {
 
           const SizedBox(height: 40),
 
-          _heroImage(width: 340, height: 440),
+          _heroImage(width: 440, height: 440),
 
           const SizedBox(height: 40),
         ],
@@ -164,12 +164,12 @@ class HeroSections extends StatelessWidget {
           ),
         ),
 
-        SizedBox(height: 30),
+        SizedBox(height: 20),
 
         FadeSlideAnimation(
           delay: Duration(milliseconds: 300),
           child: SizedBox(
-            width: 600,
+            width: 650,
             child: TypingText(
               text:
                   "Digital Growth Expert | Marketing Strategist | Business Consultant | Helping Businesses Achieve Success in the Digital Era with 15+ years of experience | Let's Connect and Explore Opportunities Togather!",
@@ -181,7 +181,7 @@ class HeroSections extends StatelessWidget {
           ),
         ),
 
-        SizedBox(height: 40),
+        SizedBox(height: 20),
 
         FadeSlideAnimation(
           delay: Duration(milliseconds: 600),

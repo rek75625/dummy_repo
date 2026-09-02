@@ -66,7 +66,7 @@ class _SkillCardState extends State<SkillCard> {
               child: Icon(widget.skill.icon, color: AppColors.yellow, size: 42),
             ),
 
-            const SizedBox(height: 20),
+            const SizedBox(height: 10),
 
             Text(
               widget.skill.title,

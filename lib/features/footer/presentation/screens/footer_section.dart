@@ -363,7 +363,7 @@ class _Logo extends StatelessWidget {
         color: Colors.white.withValues(alpha: .025),
       ),
       child: Image.asset(
-        'assets/images/hassanlogo.jpg',
+        "assets/images/hassanlogo.png",
         height: 68,
         fit: BoxFit.contain,
       ),

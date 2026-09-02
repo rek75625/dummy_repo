@@ -15,8 +15,8 @@ class AboutScreen extends StatelessWidget {
         horizontal: Responsive.isDesktop(context)
             ? 50
             : Responsive.isTablet(context)
-            ? 50
-            : 20,
+            ? 30
+            : 35,
         vertical: Responsive.isDesktop(context) ? 40 : 40,
       ),
       child: Responsive.isDesktop(context)

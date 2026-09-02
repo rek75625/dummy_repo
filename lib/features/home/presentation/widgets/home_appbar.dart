@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hassanzamin/features/contact/presentation/contact_details_screen.dart';
 import 'package:hassanzamin/features/home/provider/home_provider.dart';
@@ -19,11 +20,11 @@ Widget appBar(BuildContext context, HomeProvider provider) {
     return Builder(
       builder: (context) {
         return Container(
-          height: 85,
+          height: 55,
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Row(
             children: [
-              Image.asset("assets/images/hassanlogo.jpg", height: 60),
+              Image.asset("assets/images/hassanlogo.png", height: 45),
 
               const Spacer(),
 
@@ -45,11 +46,11 @@ Widget appBar(BuildContext context, HomeProvider provider) {
   //=========================================================
 
   return Container(
-    height: 90,
+    height: 55,
     padding: EdgeInsets.symmetric(horizontal: 40),
     child: Row(
       children: [
-        Image.asset("assets/images/hassanlogo.jpg", height: 50),
+        Image.asset("assets/images/hassanlogo.png", height: 45),
 
         Spacer(),
 
@@ -122,7 +123,7 @@ Drawer mobileDrawer(BuildContext context, HomeProvider provider) {
           // LOGO
           // =========================================================
           Center(
-            child: Image.asset("assets/images/hassanlogo.jpg", height: 65),
+            child: Image.asset("assets/images/hassanlogo.png", height: 55),
           ),
 
           const SizedBox(height: 25),
@@ -262,12 +263,30 @@ Drawer mobileDrawer(BuildContext context, HomeProvider provider) {
                   Icons.arrow_forward_rounded,
                   color: Colors.black,
                 ),
-                onTap: () {
-                  Navigator.pop(context);
+                onTap: () async {
+                  const String businessPhoneNumber = '923453884988';
 
-                  Future.delayed(const Duration(milliseconds: 250), () {
-                    provider.scrollToSection(provider.footerKey);
-                  });
+                  const String message =
+                      'Hello Hassan Zamin, I would like to discuss a project or something with you.';
+
+                  final Uri whatsappUrl = Uri.https(
+                    'wa.me',
+                    '/$businessPhoneNumber',
+                    {'text': message},
+                  );
+
+                  try {
+                    if (await canLaunchUrl(whatsappUrl)) {
+                      await launchUrl(
+                        whatsappUrl,
+                        mode: LaunchMode.externalApplication,
+                      );
+                    } else {
+                      debugPrint('Could not open WhatsApp.');
+                    }
+                  } catch (e) {
+                    debugPrint('WhatsApp error: $e');
+                  }
                 },
               ),
             ),
@@ -356,22 +375,23 @@ Widget whatsappButton(HomeProvider provider) {
     },
     borderRadius: BorderRadius.circular(50),
     child: Container(
-      padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
       decoration: BoxDecoration(
-        color: Colors.amber, // Yellow background
+        color: Colors.transparent, // Yellow background
         borderRadius: BorderRadius.circular(50),
+        border: Border.all(color: Colors.amber),
       ),
       child: const Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(Icons.phone, color: Colors.black, size: 20),
+          FaIcon(FontAwesomeIcons.whatsapp, color: Colors.amber),
           SizedBox(width: 8),
           Text(
             "Whatsapp",
             style: TextStyle(
-              color: Colors.black,
+              color: Colors.amber,
               fontWeight: FontWeight.bold,
-              fontSize: 15,
+              fontSize: 16,
             ),
           ),
         ],

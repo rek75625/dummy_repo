@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hassanzamin/core/widgets/custom_appbar.dart';
-import 'package:hassanzamin/features/about/presentation/screens/about_screen.dart';
 import 'package:hassanzamin/features/about/presentation/screens/video_player_screen.dart';
+import 'package:hassanzamin/features/about/presentation/widgets/about_widget.dart';
 import 'package:hassanzamin/features/about/presentation/widgets/team_grid.dart';
 import 'package:hassanzamin/features/about/presentation/widgets/video_card.dart';
 import 'package:hassanzamin/features/footer/presentation/screens/footer_section.dart';
@@ -101,7 +101,7 @@ class AboutDetailScreen extends StatelessWidget {
               },
             ),
             SizedBox(height: 20),
-            AboutScreen(isDetails: false),
+            AboutWidget(isDetails: true),
             SizedBox(height: 20),
             VideoCard(
               thumbnail: "assets/images/aboutyoutube.jpeg",

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 Widget customAppBar(BuildContext context) {
@@ -15,7 +16,7 @@ Widget customAppBar(BuildContext context) {
             Navigator.of(context).popUntil((route) => route.isFirst);
           },
           child: Image.asset(
-            "assets/images/hassanlogo.jpg",
+            "assets/images/hassanlogo.png",
             height: width < 768 ? 42 : 50,
           ),
         ),
@@ -27,7 +28,6 @@ Widget customAppBar(BuildContext context) {
 
 Widget whatsappButton(double width) {
   return InkWell(
-    borderRadius: BorderRadius.circular(50),
     onTap: () async {
       const String businessPhoneNumber = '923453884988';
 
@@ -48,26 +48,25 @@ Widget whatsappButton(double width) {
         debugPrint('WhatsApp error: $e');
       }
     },
+    borderRadius: BorderRadius.circular(50),
     child: Container(
-      padding: EdgeInsets.symmetric(
-        horizontal: width < 768 ? 14 : 18,
-        vertical: width < 768 ? 8 : 10,
-      ),
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
       decoration: BoxDecoration(
-        color: Colors.amber,
+        color: Colors.transparent, // Yellow background
         borderRadius: BorderRadius.circular(50),
+        border: Border.all(color: Colors.amber),
       ),
-      child: Row(
+      child: const Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(Icons.phone, color: Colors.black, size: width < 768 ? 18 : 20),
-          SizedBox(width: width < 768 ? 6 : 8),
+          FaIcon(FontAwesomeIcons.whatsapp, color: Colors.amber),
+          SizedBox(width: 8),
           Text(
             "Whatsapp",
             style: TextStyle(
-              color: Colors.black,
+              color: Colors.amber,
               fontWeight: FontWeight.bold,
-              fontSize: width < 768 ? 13 : 15,
+              fontSize: 16,
             ),
           ),
         ],

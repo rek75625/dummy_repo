@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hassanzamin/core/constants/app_colors.dart';
 import 'package:marqueer/marqueer.dart';
 
 class MotionBanners extends StatelessWidget {
@@ -18,9 +19,9 @@ class MotionBanners extends StatelessWidget {
     ];
 
     return Container(
-      height: 72,
+      height: 50,
       decoration: BoxDecoration(
-        color: const Color(0xFF25204F),
+        color: AppColors.background,
         border: Border(
           top: BorderSide(color: Colors.white.withValues(alpha: 0.08)),
           bottom: BorderSide(color: Colors.white.withValues(alpha: 0.08)),
@@ -32,32 +33,18 @@ class MotionBanners extends StatelessWidget {
         child: Row(
           children: skills.map((skill) {
             return Container(
-              margin: const EdgeInsets.symmetric(horizontal: 10),
-              padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
               decoration: BoxDecoration(
                 color: Colors.white.withValues(alpha: 0.08),
-                borderRadius: BorderRadius.circular(30),
-                border: Border.all(color: Colors.white.withValues(alpha: 0.12)),
               ),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const Icon(
-                    Icons.auto_awesome,
-                    size: 18,
-                    color: Color(0xFFF8F54B),
-                  ),
-                  const SizedBox(width: 8),
-                  Text(
-                    skill,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 15,
-                      fontWeight: FontWeight.w600,
-                      letterSpacing: 0.3,
-                    ),
-                  ),
-                ],
+              child: Text(
+                skill,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 15,
+                  fontWeight: FontWeight.w600,
+                  letterSpacing: 0.3,
+                ),
               ),
             );
           }).toList(),

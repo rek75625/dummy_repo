@@ -86,16 +86,12 @@ class HomeScreen extends StatelessWidget {
           controller: provider.scrollController,
           child: Column(
             children: [
+              MotionBanners(),
               appBar(context, provider),
 
               HeroSections(key: provider.homeKey),
 
               AboutScreen(key: provider.aboutKey, isDetails: true),
-
-              Padding(
-                padding: EdgeInsets.symmetric(vertical: 80),
-                child: MotionBanners(),
-              ),
 
               ServicesScreen(key: provider.servicesKey),
 
